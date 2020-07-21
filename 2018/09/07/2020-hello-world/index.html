@@ -391,13 +391,17 @@
             <span class="token function">_class_resolveInstanceMethod</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> sel<span class="token punctuation">,</span> inst<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-</code></pre>
+<span class="token punctuation">}</span></code></pre>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
 <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">let</span> pageControl <span class="token operator">=</span> <span class="token function">UIPageControl</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+pageControl<span class="token punctuation">.</span>preferredIndicatorImage <span class="token operator">=</span> <span class="token function">UIImage</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span><span class="token string">"tortoise"</span><span class="token punctuation">)</span>
+pageControl<span class="token punctuation">.</span><span class="token function">setIndicatorImage</span><span class="token punctuation">(</span><span class="token function">UIImage</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span><span class="token string">"hare"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> forPage<span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">)</span>
+
+<span class="token keyword">let</span> datePicker <span class="token operator">=</span> <span class="token function">UIDatePicker</span><span class="token punctuation">(</span>frame<span class="token punctuation">:</span> <span class="token punctuation">.</span>zero<span class="token punctuation">)</span>
+datePicker<span class="token punctuation">.</span>preferredDatePickerStyle <span class="token operator">=</span> <span class="token punctuation">.</span>inline</code></pre>
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
             </div>
