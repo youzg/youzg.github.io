@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="尝试部署, youzg">
+    <meta name="keywords" content="使用CADisplayLink、NSTimer有什么注意点, youzg">
     <meta name="description" content="唯刀百辟 唯心不易">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>尝试部署 | youzg</title>
+    <title>使用CADisplayLink、NSTimer有什么注意点 | youzg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -201,12 +201,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">尝试部署</h1>
+                    <h1 class="description center-align post-title">使用CADisplayLink、NSTimer有什么注意点</h1>
                 </div>
             </div>
         </div>
@@ -323,12 +323,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Demo/">
-                                <span class="chip bg-color">Demo</span>
+                            <a href="/tags/iOS/">
+                                <span class="chip bg-color">iOS</span>
                             </a>
                         
-                            <a href="/tags/Markdown/">
-                                <span class="chip bg-color">Markdown</span>
+                            <a href="/tags/Swift/">
+                                <span class="chip bg-color">Swift</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+                                <span class="chip bg-color">内存管理</span>
                             </a>
                         
                     </div>
@@ -339,8 +343,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Demo/" class="post-category">
-                                Demo
+                            <a href="/categories/iOS/" class="post-category">
+                                iOS
                             </a>
                         
                     </div>
@@ -352,7 +356,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2018-09-07
+                    2019-05-01
                 </div>
                 
 
@@ -368,55 +372,95 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<pre class=" language-swift"><code class="language-swift">void <span class="token function">_class_resolveMethod</span><span class="token punctuation">(</span><span class="token builtin">Class</span> <span class="token class-name">cls</span><span class="token punctuation">,</span> <span class="token constant">SEL</span> sel<span class="token punctuation">,</span> id inst<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 是否是元类</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span> cls<span class="token operator">-</span><span class="token operator">></span><span class="token function">isMetaClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// try [cls resolveInstanceMethod:sel]</span>
+                <p>CADisplayLink、NSTimer会对target产生强引用，此时target又对他们产生强引用，那么就会触发循环引用</p>
+<p>以下情况都会触发循环引用</p>
+<blockquote>
+<p>CADisplayLink<br>是用于同步屏幕刷新频率的计数器，调用频率和屏幕刷新频率一致，目前基本都是60fps</p>
+</blockquote>
+<pre class=" language-swift"><code class="language-swift">    <span class="token keyword">private</span> <span class="token keyword">var</span> link<span class="token punctuation">:</span> <span class="token builtin">CADisplayLink</span><span class="token operator">?</span>
 
-        <span class="token function">_class_resolveInstanceMethod</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> sel<span class="token punctuation">,</span> inst<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> 
-    <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// try [nonMetaClass resolveClassMethod:sel]</span>
-        <span class="token comment" spellcheck="true">// and [cls resolveInstanceMethod:sel]</span>
-        <span class="token function">_class_resolveClassMethod</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> sel<span class="token punctuation">,</span> inst<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 已经处理</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">lookUpImpOrNil</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> sel<span class="token punctuation">,</span> inst<span class="token punctuation">,</span> 
-                            <span class="token constant">NO</span><span class="token comment" spellcheck="true">/*initialize*/</span><span class="token punctuation">,</span> <span class="token constant">YES</span><span class="token comment" spellcheck="true">/*cache*/</span><span class="token punctuation">,</span> <span class="token constant">NO</span><span class="token comment" spellcheck="true">/*resolver*/</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
-        <span class="token punctuation">{</span>
+    <span class="token keyword">override</span> <span class="token keyword">func</span> <span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        link <span class="token operator">=</span> <span class="token function">CADisplayLink</span><span class="token punctuation">(</span>target<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">,</span> selector<span class="token punctuation">:</span> #<span class="token function">selector</span><span class="token punctuation">(</span>linkAction<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        link<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> <span class="token builtin">RunLoop</span><span class="token punctuation">.</span>main<span class="token punctuation">,</span> forMode<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
 
+    <span class="token atrule">@objc</span> <span class="token keyword">func</span> <span class="token function">linkAction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"CADisplayLink"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">deinit</span> <span class="token punctuation">{</span>
+        link<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">invalidate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>Timer</p>
+</blockquote>
+<pre class=" language-swift"><code class="language-swift">    <span class="token keyword">private</span> <span class="token keyword">var</span> timer<span class="token punctuation">:</span> <span class="token builtin">Timer</span><span class="token operator">?</span>
+
+    <span class="token keyword">override</span> <span class="token keyword">func</span> <span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+           timer <span class="token operator">=</span> <span class="token builtin">Timer</span><span class="token punctuation">.</span><span class="token function">scheduledTimer</span><span class="token punctuation">(</span>timeInterval<span class="token punctuation">:</span> <span class="token number">0.1</span><span class="token punctuation">,</span> target<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">,</span> selector<span class="token punctuation">:</span> #<span class="token function">selector</span><span class="token punctuation">(</span>timerAction<span class="token punctuation">)</span><span class="token punctuation">,</span> userInfo<span class="token punctuation">:</span> <span class="token constant">nil</span><span class="token punctuation">,</span> repeats<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token atrule">@objc</span> <span class="token keyword">func</span> <span class="token function">timerAction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Timer"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">deinit</span> <span class="token punctuation">{</span>
+        timer<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">invalidate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span></code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu3z5zvt6j30sy08e76y.jpg" alt="截屏2020-08-17 下午9.02.39"></p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="1-使用block而非target"><a href="#1-使用block而非target" class="headerlink" title="1.使用block而非target"></a>1.使用block而非target</h5><pre class=" language-swift"><code class="language-swift">        timer <span class="token operator">=</span> <span class="token builtin">Timer</span><span class="token punctuation">.</span><span class="token function">scheduledTimer</span><span class="token punctuation">(</span>withTimeInterval<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> repeats<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> block<span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token keyword">weak</span> <span class="token keyword">self</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">_</span><span class="token punctuation">)</span> <span class="token keyword">in</span>
+            <span class="token keyword">guard</span> <span class="token keyword">let</span> <span class="token keyword">self</span> <span class="token operator">=</span> <span class="token keyword">self</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token punctuation">}</span>
+            <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">testFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<h5 id="2-使用代理对象-NSProxy"><a href="#2-使用代理对象-NSProxy" class="headerlink" title="2.使用代理对象(NSProxy)"></a>2.使用代理对象(<code>NSProxy</code>)</h5><p>类似NSProxy处理</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token keyword">class</span> <span class="token class-name">WeakLinkProxy</span><span class="token punctuation">:</span> <span class="token builtin">NSObject</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">weak</span> <span class="token keyword">var</span> link<span class="token punctuation">:</span> <span class="token builtin">CADisplayLink</span><span class="token operator">?</span>
+    <span class="token keyword">weak</span> <span class="token keyword">var</span> target<span class="token punctuation">:</span> <span class="token builtin">NSObjectProtocol</span><span class="token operator">?</span>
+    <span class="token keyword">var</span> sel<span class="token punctuation">:</span> <span class="token builtin">Selector</span><span class="token operator">?</span>
+
+    <span class="token keyword">required</span> <span class="token keyword">init</span><span class="token punctuation">(</span><span class="token number">_</span> target<span class="token punctuation">:</span> <span class="token builtin">NSObjectProtocol</span><span class="token operator">?</span><span class="token punctuation">,</span> sel<span class="token punctuation">:</span> <span class="token builtin">Selector</span><span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">self</span><span class="token punctuation">.</span>target <span class="token operator">=</span> target
+        <span class="token keyword">self</span><span class="token punctuation">.</span>sel <span class="token operator">=</span> sel
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">guard</span> target<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">responds</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> sel<span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token boolean">false</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">let</span> method <span class="token operator">=</span> <span class="token function">class_getInstanceMethod</span><span class="token punctuation">(</span>classForCoder<span class="token punctuation">,</span> #<span class="token function">selector</span><span class="token punctuation">(</span><span class="token builtin">WeakLinkProxy</span><span class="token punctuation">.</span>redirectionMethod<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token keyword">let</span> selector <span class="token operator">=</span> sel<span class="token punctuation">,</span> <span class="token keyword">let</span> currentMethod <span class="token operator">=</span> method <span class="token punctuation">{</span>
+            <span class="token function">class_replaceMethod</span><span class="token punctuation">(</span>classForCoder<span class="token punctuation">,</span> selector<span class="token punctuation">,</span> <span class="token function">method_getImplementation</span><span class="token punctuation">(</span>currentMethod<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">method_getTypeEncoding</span><span class="token punctuation">(</span>currentMethod<span class="token punctuation">)</span><span class="token punctuation">)</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-swift"><code class="language-swift"><span class="token operator">+</span> <span class="token punctuation">(</span>void<span class="token punctuation">)</span>load
-<span class="token punctuation">{</span>
-<span class="token comment" spellcheck="true">//注册项目启动监听</span>
-__block id observer <span class="token operator">=</span>
-<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token builtin">NSNotificationCenter</span> defaultCenter<span class="token punctuation">]</span> addObserverForName<span class="token punctuation">:</span><span class="token builtin">UIApplicationDidFinishLaunchingNotification</span> object<span class="token punctuation">:</span><span class="token constant">nil</span> queue<span class="token punctuation">:</span><span class="token constant">nil</span> usingBlock<span class="token punctuation">:</span><span class="token operator">^</span><span class="token punctuation">(</span><span class="token builtin">NSNotification</span> <span class="token operator">*</span> _Nonnull note<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-<span class="token comment" spellcheck="true">//更改bundlePath</span>
-<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token builtin">NSBundle</span> bundleWithPath<span class="token punctuation">:</span>@<span class="token string">"/Applications/InjectionIII.app/Contents/Resources/iOSInjection10.bundle"</span><span class="token punctuation">]</span> load<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">//[[NSBundle bundleWithPath:@"/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle"] load];</span>
 
-<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token builtin">NSNotificationCenter</span> defaultCenter<span class="token punctuation">]</span> removeObserver<span class="token punctuation">:</span>observer<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">//给UIViewController 注册injected 方法</span>
-<span class="token function">class_addMethod</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token builtin">UIViewController</span> <span class="token keyword">class</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token function">NSSelectorFromString</span><span class="token punctuation">(</span>@<span class="token string">"injected"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token constant">IMP</span><span class="token punctuation">)</span>injected<span class="token punctuation">,</span> <span class="token string">"v@:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token atrule">@objc</span> <span class="token keyword">func</span> <span class="token function">redirectionMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token keyword">let</span> currentTarget <span class="token operator">=</span> target <span class="token punctuation">{</span>
+            currentTarget<span class="token punctuation">.</span><span class="token function">perform</span><span class="token punctuation">(</span>sel<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            link<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">invalidate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
 <span class="token punctuation">}</span></code></pre>
-<pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<pre class=" language-swift"><code class="language-swift"><span class="token keyword">let</span> pageControl <span class="token operator">=</span> <span class="token function">UIPageControl</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-pageControl<span class="token punctuation">.</span>preferredIndicatorImage <span class="token operator">=</span> <span class="token function">UIImage</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span><span class="token string">"tortoise"</span><span class="token punctuation">)</span>
-pageControl<span class="token punctuation">.</span><span class="token function">setIndicatorImage</span><span class="token punctuation">(</span><span class="token function">UIImage</span><span class="token punctuation">(</span>systemName<span class="token punctuation">:</span><span class="token string">"hare"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> forPage<span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">)</span>
+<pre class=" language-swift"><code class="language-swift">    <span class="token keyword">let</span> proxy <span class="token operator">=</span> <span class="token function">YOUWeakLinkProxy</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">,</span> sel<span class="token punctuation">:</span> #<span class="token function">selector</span><span class="token punctuation">(</span>linkAction<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    link <span class="token operator">=</span> <span class="token function">CADisplayLink</span><span class="token punctuation">(</span>target<span class="token punctuation">:</span> proxy<span class="token punctuation">,</span> selector<span class="token punctuation">:</span> #<span class="token function">selector</span><span class="token punctuation">(</span>linkAction<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    link<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> <span class="token builtin">RunLoop</span><span class="token punctuation">.</span>main<span class="token punctuation">,</span> forMode<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">)</span>
+    proxy<span class="token punctuation">.</span>link <span class="token operator">=</span> link</code></pre>
+<p>以上定时器均依赖Runloop，如果Runloop有耗时操作，则会导致计数器不准确</p>
+<h4 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h4><pre><code>    var timer: DispatchSourceTimer?
 
-<span class="token keyword">let</span> datePicker <span class="token operator">=</span> <span class="token function">UIDatePicker</span><span class="token punctuation">(</span>frame<span class="token punctuation">:</span> <span class="token punctuation">.</span>zero<span class="token punctuation">)</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+    // flags: DispatchSource.TimerFlags Flags to use when configuring a timer dispatch source.这里应该是计时器标记，初始化方法直接是空Set
+    timer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags.init(), queue: DispatchQueue.global())
+    timer?.schedule(deadline: .now(), repeating: .seconds(10), leeway: .milliseconds(10))
+    timer?.setEventHandler(handler: {
+        DispatchQueue.main.async {
+
+        }
+    })
+    timer?.resume()</code></pre><p><a href="https://www.jianshu.com/p/77ffd52ead2e" target="_blank" rel="noopener">WeakLinkProxy来自Swift中Timer的循环引用解决方案</a><br><a href="https://developer.apple.com/documentation/dispatch/dispatchsource" target="_blank" rel="noopener">DispatchSource</a></p>
 
             </div>
             <hr/>
@@ -442,7 +486,7 @@ pageControl<span class="token punctuation">.</span><span class="token function">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://youzg.cc/2018/09/07/2020-hello-world/">http://youzg.cc/2018/09/07/2020-hello-world/</a>
+                    <a href="http://youzg.cc/2019/05/01/2019-memory-manage01/">http://youzg.cc/2019/05/01/2019-memory-manage01/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -480,12 +524,16 @@ pageControl<span class="token punctuation">.</span><span class="token function">
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Demo/">
-                                    <span class="chip bg-color">Demo</span>
+                                <a href="/tags/iOS/">
+                                    <span class="chip bg-color">iOS</span>
                                 </a>
                             
-                                <a href="/tags/Markdown/">
-                                    <span class="chip bg-color">Markdown</span>
+                                <a href="/tags/Swift/">
+                                    <span class="chip bg-color">Swift</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+                                    <span class="chip bg-color">内存管理</span>
                                 </a>
                             
                         </div>
@@ -790,9 +838,10 @@ pageControl<span class="token punctuation">.</span><span class="token function">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2019/05/01/2019-memory-manage01/">
                     <div class="card-image">
@@ -810,9 +859,9 @@ pageControl<span class="token punctuation">.</span><span class="token function">
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-05-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-05-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -825,6 +874,7 @@ pageControl<span class="token punctuation">.</span><span class="token function">
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -848,7 +898,7 @@ pageControl<span class="token punctuation">.</span><span class="token function">
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2018/09/07/2020-hello-world/">
@@ -882,7 +932,6 @@ pageControl<span class="token punctuation">.</span><span class="token function">
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
