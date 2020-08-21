@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="使用CADisplayLink、NSTimer有什么注意点, youzg">
+    <meta name="keywords" content="正则表达式速查表, youzg">
     <meta name="description" content="唯刀百辟 唯心不易">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>使用CADisplayLink、NSTimer有什么注意点 | youzg</title>
+    <title>正则表达式速查表 | youzg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -201,12 +201,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv6yxk8msj312s0u0h0v.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyjyt969gj30hs0buwga.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">使用CADisplayLink、NSTimer有什么注意点</h1>
+                    <h1 class="description center-align post-title">正则表达式速查表</h1>
                 </div>
             </div>
         </div>
@@ -323,16 +323,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/iOS/">
-                                <span class="chip bg-color">iOS</span>
+                            <a href="/tags/CS/">
+                                <span class="chip bg-color">CS</span>
                             </a>
                         
-                            <a href="/tags/Swift/">
-                                <span class="chip bg-color">Swift</span>
-                            </a>
-                        
-                            <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
-                                <span class="chip bg-color">内存管理</span>
+                            <a href="/tags/Tool/">
+                                <span class="chip bg-color">Tool</span>
                             </a>
                         
                     </div>
@@ -343,8 +339,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/iOS/" class="post-category">
-                                iOS
+                            <a href="/categories/CS/" class="post-category">
+                                CS
                             </a>
                         
                     </div>
@@ -356,7 +352,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-05-01
+                    2020-08-20
                 </div>
                 
 
@@ -372,95 +368,304 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>CADisplayLink、NSTimer会对target产生强引用，此时target又对他们产生强引用，那么就会触发循环引用</p>
-<p>以下情况都会触发循环引用</p>
-<blockquote>
-<p>CADisplayLink<br>是用于同步屏幕刷新频率的计数器，调用频率和屏幕刷新频率一致，目前基本都是60fps</p>
-</blockquote>
-<pre class=" language-swift"><code class="language-swift">    <span class="token keyword">private</span> <span class="token keyword">var</span> link<span class="token punctuation">:</span> <span class="token builtin">CADisplayLink</span><span class="token operator">?</span>
-
-    <span class="token keyword">override</span> <span class="token keyword">func</span> <span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        link <span class="token operator">=</span> <span class="token function">CADisplayLink</span><span class="token punctuation">(</span>target<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">,</span> selector<span class="token punctuation">:</span> #<span class="token function">selector</span><span class="token punctuation">(</span>linkAction<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        link<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> <span class="token builtin">RunLoop</span><span class="token punctuation">.</span>main<span class="token punctuation">,</span> forMode<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token atrule">@objc</span> <span class="token keyword">func</span> <span class="token function">linkAction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"CADisplayLink"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">deinit</span> <span class="token punctuation">{</span>
-        link<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">invalidate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-</code></pre>
-<blockquote>
-<p>Timer</p>
-</blockquote>
-<pre class=" language-swift"><code class="language-swift">    <span class="token keyword">private</span> <span class="token keyword">var</span> timer<span class="token punctuation">:</span> <span class="token builtin">Timer</span><span class="token operator">?</span>
-
-    <span class="token keyword">override</span> <span class="token keyword">func</span> <span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">viewDidLoad</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-           timer <span class="token operator">=</span> <span class="token builtin">Timer</span><span class="token punctuation">.</span><span class="token function">scheduledTimer</span><span class="token punctuation">(</span>timeInterval<span class="token punctuation">:</span> <span class="token number">0.1</span><span class="token punctuation">,</span> target<span class="token punctuation">:</span> <span class="token keyword">self</span><span class="token punctuation">,</span> selector<span class="token punctuation">:</span> #<span class="token function">selector</span><span class="token punctuation">(</span>timerAction<span class="token punctuation">)</span><span class="token punctuation">,</span> userInfo<span class="token punctuation">:</span> <span class="token constant">nil</span><span class="token punctuation">,</span> repeats<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token atrule">@objc</span> <span class="token keyword">func</span> <span class="token function">timerAction</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Timer"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">deinit</span> <span class="token punctuation">{</span>
-        timer<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">invalidate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span></code></pre>
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghu3z5zvt6j30sy08e76y.jpg" alt="截屏2020-08-17 下午9.02.39"></p>
-<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><h5 id="1-使用block而非target"><a href="#1-使用block而非target" class="headerlink" title="1.使用block而非target"></a>1.使用block而非target</h5><pre class=" language-swift"><code class="language-swift">        timer <span class="token operator">=</span> <span class="token builtin">Timer</span><span class="token punctuation">.</span><span class="token function">scheduledTimer</span><span class="token punctuation">(</span>withTimeInterval<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> repeats<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> block<span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token punctuation">[</span><span class="token keyword">weak</span> <span class="token keyword">self</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">_</span><span class="token punctuation">)</span> <span class="token keyword">in</span>
-            <span class="token keyword">guard</span> <span class="token keyword">let</span> <span class="token keyword">self</span> <span class="token operator">=</span> <span class="token keyword">self</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token punctuation">}</span>
-            <span class="token keyword">self</span><span class="token punctuation">.</span><span class="token function">testFunc</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre>
-<h5 id="2-使用代理对象-NSProxy"><a href="#2-使用代理对象-NSProxy" class="headerlink" title="2.使用代理对象(NSProxy)"></a>2.使用代理对象(<code>NSProxy</code>)</h5><p>类似NSProxy处理</p>
-<pre class=" language-swift"><code class="language-swift"><span class="token keyword">class</span> <span class="token class-name">WeakLinkProxy</span><span class="token punctuation">:</span> <span class="token builtin">NSObject</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">weak</span> <span class="token keyword">var</span> link<span class="token punctuation">:</span> <span class="token builtin">CADisplayLink</span><span class="token operator">?</span>
-    <span class="token keyword">weak</span> <span class="token keyword">var</span> target<span class="token punctuation">:</span> <span class="token builtin">NSObjectProtocol</span><span class="token operator">?</span>
-    <span class="token keyword">var</span> sel<span class="token punctuation">:</span> <span class="token builtin">Selector</span><span class="token operator">?</span>
-
-    <span class="token keyword">required</span> <span class="token keyword">init</span><span class="token punctuation">(</span><span class="token number">_</span> target<span class="token punctuation">:</span> <span class="token builtin">NSObjectProtocol</span><span class="token operator">?</span><span class="token punctuation">,</span> sel<span class="token punctuation">:</span> <span class="token builtin">Selector</span><span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">self</span><span class="token punctuation">.</span>target <span class="token operator">=</span> target
-        <span class="token keyword">self</span><span class="token punctuation">.</span>sel <span class="token operator">=</span> sel
-        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token keyword">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token keyword">guard</span> target<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">responds</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> sel<span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">?</span> <span class="token boolean">false</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">let</span> method <span class="token operator">=</span> <span class="token function">class_getInstanceMethod</span><span class="token punctuation">(</span>classForCoder<span class="token punctuation">,</span> #<span class="token function">selector</span><span class="token punctuation">(</span><span class="token builtin">WeakLinkProxy</span><span class="token punctuation">.</span>redirectionMethod<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> <span class="token keyword">let</span> selector <span class="token operator">=</span> sel<span class="token punctuation">,</span> <span class="token keyword">let</span> currentMethod <span class="token operator">=</span> method <span class="token punctuation">{</span>
-            <span class="token function">class_replaceMethod</span><span class="token punctuation">(</span>classForCoder<span class="token punctuation">,</span> selector<span class="token punctuation">,</span> <span class="token function">method_getImplementation</span><span class="token punctuation">(</span>currentMethod<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">method_getTypeEncoding</span><span class="token punctuation">(</span>currentMethod<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token atrule">@objc</span> <span class="token keyword">func</span> <span class="token function">redirectionMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token keyword">let</span> currentTarget <span class="token operator">=</span> target <span class="token punctuation">{</span>
-            currentTarget<span class="token punctuation">.</span><span class="token function">perform</span><span class="token punctuation">(</span>sel<span class="token punctuation">)</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            link<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">invalidate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span></code></pre>
-<pre class=" language-swift"><code class="language-swift">    <span class="token keyword">let</span> proxy <span class="token operator">=</span> <span class="token function">YOUWeakLinkProxy</span><span class="token punctuation">(</span><span class="token keyword">self</span><span class="token punctuation">,</span> sel<span class="token punctuation">:</span> #<span class="token function">selector</span><span class="token punctuation">(</span>linkAction<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    link <span class="token operator">=</span> <span class="token function">CADisplayLink</span><span class="token punctuation">(</span>target<span class="token punctuation">:</span> proxy<span class="token punctuation">,</span> selector<span class="token punctuation">:</span> #<span class="token function">selector</span><span class="token punctuation">(</span>linkAction<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    link<span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>to<span class="token punctuation">:</span> <span class="token builtin">RunLoop</span><span class="token punctuation">.</span>main<span class="token punctuation">,</span> forMode<span class="token punctuation">:</span> <span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">)</span>
-    proxy<span class="token punctuation">.</span>link <span class="token operator">=</span> link</code></pre>
-<p>以上定时器均依赖Runloop，如果Runloop有耗时操作，则会导致计数器不准确</p>
-<h4 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h4><pre><code>    var timer: DispatchSourceTimer?
-
-    // flags: DispatchSource.TimerFlags Flags to use when configuring a timer dispatch source.这里应该是计时器标记，初始化方法直接是空Set
-    timer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags.init(), queue: DispatchQueue.global())
-    timer?.schedule(deadline: .now(), repeating: .seconds(10), leeway: .milliseconds(10))
-    timer?.setEventHandler(handler: {
-        DispatchQueue.main.async {
-
-        }
-    })
-    timer?.resume()</code></pre><p><a href="https://www.jianshu.com/p/77ffd52ead2e" target="_blank" rel="noopener">WeakLinkProxy来自Swift中Timer的循环引用解决方案</a><br><a href="https://developer.apple.com/documentation/dispatch/dispatchsource" target="_blank" rel="noopener">DispatchSource</a></p>
+                <p>正则表达式</p>
+<table>
+<thead>
+<tr>
+<th align="left">字符</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>\</code></td>
+<td align="left">将下一个字符标记为一个特殊字符（File Format Escape，清单见本表）、或一个原义字符（Identity Escape，有^$()*+?.[{|共计12个)、或一个向后引用（backreferences）、或一个八进制转义符。例如，“<code>n</code>”匹配字符“<code>n</code>”。“<code>\n</code>”匹配一个换行符。序列“<code>\\</code>”匹配“<code>\</code>”而“<code>\(</code>”则匹配“<code>(</code>”。</td>
+</tr>
+<tr>
+<td align="left"><code>^</code></td>
+<td align="left">匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配“<code>\n</code>”或“<code>\r</code>”之后的位置。</td>
+</tr>
+<tr>
+<td align="left"><code>$</code></td>
+<td align="left">匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配“<code>\n</code>”或“<code>\r</code>”之前的位置。</td>
+</tr>
+<tr>
+<td align="left"><code>*</code></td>
+<td align="left">匹配前面的子表达式零次或多次。例如，zo<em>能匹配“<code>z</code>”、“<code>zo</code>”以及“<code>zoo</code>”。</em>等价于{0,}。</td>
+</tr>
+<tr>
+<td align="left"><code>+</code></td>
+<td align="left">匹配前面的子表达式一次或多次。例如，“<code>zo+</code>”能匹配“<code>zo</code>”以及“<code>zoo</code>”，但不能匹配“<code>z</code>”。+等价于{1,}。</td>
+</tr>
+<tr>
+<td align="left"><code>?</code></td>
+<td align="left">匹配前面的子表达式零次或一次。例如，“<code>do(es)?</code>”可以匹配“<code>do</code>”或“<code>does</code>”中的“<code>do</code>”。?等价于{0,1}。</td>
+</tr>
+<tr>
+<td align="left"><code>{n}</code></td>
+<td align="left">n是一个非负整数。匹配确定的n次。例如，“<code>o{2}</code>”不能匹配“<code>Bob</code>”中的“<code>o</code>”，但是能匹配“<code>food</code>”中的两个o。</td>
+</tr>
+<tr>
+<td align="left"><code>{n,}</code></td>
+<td align="left">n是一个非负整数。至少匹配n次。例如，“<code>o{2,}</code>”不能匹配“<code>Bob</code>”中的“<code>o</code>”，但能匹配“<code>foooood</code>”中的所有o。“<code>o{1,}</code>”等价于“<code>o+</code>”。“<code>o{0,}</code>”则等价于“<code>o*</code>”。</td>
+</tr>
+<tr>
+<td align="left"><code>{n,m}</code></td>
+<td align="left">m和n均为非负整数，其中n&lt;=m。最少匹配n次且最多匹配m次。例如，“<code>o{1,3}</code>”将匹配“<code>fooooood</code>”中的前三个o。“<code>o{0,1}</code>”等价于“<code>o?</code>”。请注意在逗号和两个数之间不能有空格。</td>
+</tr>
+<tr>
+<td align="left"><code>?</code></td>
+<td align="left">非贪心量化（Non-greedy quantifiers）：当该字符紧跟在任何一个其他重复修饰符（<em>,+,?，{n}，{n,}，{n,m}）后面时，匹配模式是*</em>非**贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串“<code>oooo</code>”，“<code>o+?</code>”将匹配单个“<code>o</code>”，而“<code>o+</code>”将匹配所有“<code>o</code>”。</td>
+</tr>
+<tr>
+<td align="left"><code>.</code></td>
+<td align="left">匹配除“<code>\r</code>”“<code>\n</code>”之外的任何单个字符。要匹配包括“<code>\r</code>”“<code>\n</code>”在内的任何字符，请使用像“`(.|\r|\n)”的模式。</td>
+</tr>
+<tr>
+<td align="left"><code>(pattern)</code></td>
+<td align="left">匹配pattern并获取这一匹配的子字符串。该子字符串用于向后引用。所获取的匹配可以从产生的Matches集合得到，在VBScript中使用SubMatches集合，在JScript中则使用$0…$9属性。要匹配圆括号字符，请使用“<code>\(</code>”或“<code>\)</code>”。可带数量后缀。</td>
+</tr>
+<tr>
+<td align="left"><code>(?:pattern)</code></td>
+<td align="left">匹配pattern但不获取匹配的子字符串（shy groups），也就是说这是一个非获取匹配，不存储匹配的子字符串用于向后引用。这在使用或字符“`(</td>
+</tr>
+<tr>
+<td align="left"><code>(?=pattern)</code></td>
+<td align="left">正向肯定预查（look ahead positive assert），在任何匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，“`Windows(?=95</td>
+</tr>
+<tr>
+<td align="left"><code>(?!pattern)</code></td>
+<td align="left">正向否定预查（negative assert），在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如“`Windows(?!95</td>
+</tr>
+<tr>
+<td align="left"><code>(?&lt;=pattern)</code></td>
+<td align="left">反向（look behind）肯定预查，与正向肯定预查类似，只是方向相反。例如，“`(?&lt;=95</td>
+</tr>
+<tr>
+<td align="left"><code>(?&lt;!pattern)</code></td>
+<td align="left">反向否定预查，与正向否定预查类似，只是方向相反。例如“`(?&lt;!95</td>
+</tr>
+<tr>
+<td align="left">`x</td>
+<td align="left">y`</td>
+</tr>
+<tr>
+<td align="left"><code>[xyz]</code></td>
+<td align="left">字符集合（character class）。匹配所包含的任意一个字符。例如，“<code>[abc]</code>”可以匹配“<code>plain</code>”中的“<code>a</code>”。特殊字符仅有反斜线\保持特殊含义，用于转义字符。其它特殊字符如星号、加号、各种括号等均作为普通字符。脱字符^如果出现在首位则表示负值字符集合；如果出现在字符串中间就仅作为普通字符。连字符 - 如果出现在字符串中间表示字符范围描述；如果如果出现在首位（或末尾）则仅作为普通字符。右方括号应转义出现，也可以作为首位字符出现。</td>
+</tr>
+<tr>
+<td align="left"><code>[^xyz]</code></td>
+<td align="left">排除型字符集合（negated character classes）。匹配未列出的任意字符。例如，“<code>[^abc]</code>”可以匹配“<code>plain</code>”中的“<code>plain</code>”。</td>
+</tr>
+<tr>
+<td align="left"><code>[a-z]</code></td>
+<td align="left">字符范围。匹配指定范围内的任意字符。例如，“<code>[a-z]</code>”可以匹配“<code>a</code>”到“<code>z</code>”范围内的任意小写字母字符。</td>
+</tr>
+<tr>
+<td align="left"><code>[^a-z]</code></td>
+<td align="left">排除型的字符范围。匹配任何不在指定范围内的任意字符。例如，“<code>[^a-z]</code>”可以匹配任何不在“<code>a</code>”到“<code>z</code>”范围内的任意字符。</td>
+</tr>
+<tr>
+<td align="left"><code>[:name:]</code></td>
+<td align="left">增加命名字符类（named character class）[注 1]中的字符到表达式。只能用于<strong>方括号表达式</strong>。</td>
+</tr>
+<tr>
+<td align="left"><code>[=elt=]</code></td>
+<td align="left">增加当前locale下排序（collate）等价于字符“elt”的元素。例如，[=a=]可能会增加ä、á、à、ă、ắ、ằ、ẵ、ẳ、â、ấ、ầ、ẫ、ẩ、ǎ、å、ǻ、ä、ǟ、ã、ȧ、ǡ、ą、ā、ả、ȁ、ȃ、ạ、ặ、ậ、ḁ、ⱥ、ᶏ、ɐ、ɑ 。只能用于方括号表达式。</td>
+</tr>
+<tr>
+<td align="left"><code>[.elt.]</code></td>
+<td align="left">增加排序元素（collation element）elt到表达式中。这是因为某些排序元素由多个字符组成。例如，29个字母表的西班牙语， “CH”作为单个字母排在字母C之后，因此会产生如此排序“cinco, credo, chispa”。只能用于方括号表达式。</td>
+</tr>
+<tr>
+<td align="left"><code>\b</code></td>
+<td align="left">匹配一个单词边界，也就是指单词和空格间的位置。例如，“<code>er\b</code>”可以匹配“<code>never</code>”中的“<code>er</code>”，但不能匹配“<code>verb</code>”中的“<code>er</code>”。</td>
+</tr>
+<tr>
+<td align="left"><code>\B</code></td>
+<td align="left">匹配非单词边界。“<code>er\B</code>”能匹配“<code>verb</code>”中的“<code>er</code>”，但不能匹配“<code>never</code>”中的“<code>er</code>”。</td>
+</tr>
+<tr>
+<td align="left"><code>\cx</code></td>
+<td align="left">匹配由x指明的控制字符。x的值必须为<code>A-Z</code>或<code>a-z</code>之一。否则，将c视为一个原义的“<code>c</code>”字符。控制字符的值等于x的值最低5比特（即对3210进制的余数）。例如，\cM匹配一个Control-M或回车符。\ca等效于\u0001, \cb等效于\u0002, 等等…</td>
+</tr>
+<tr>
+<td align="left"><code>\d</code></td>
+<td align="left">匹配一个数字字符。等价于[0-9]。注意Unicode正则表达式会匹配全角数字字符。</td>
+</tr>
+<tr>
+<td align="left"><code>\D</code></td>
+<td align="left">匹配一个非数字字符。等价于[^0-9]。</td>
+</tr>
+<tr>
+<td align="left"><code>\f</code></td>
+<td align="left">匹配一个换页符。等价于\x0c和\cL。</td>
+</tr>
+<tr>
+<td align="left"><code>\n</code></td>
+<td align="left">匹配一个换行符。等价于\x0a和\cJ。</td>
+</tr>
+<tr>
+<td align="left"><code>\r</code></td>
+<td align="left">匹配一个回车符。等价于\x0d和\cM。</td>
+</tr>
+<tr>
+<td align="left"><code>\s</code></td>
+<td align="left">匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]。注意Unicode正则表达式会匹配全角空格符。</td>
+</tr>
+<tr>
+<td align="left"><code>\S</code></td>
+<td align="left">匹配任何非空白字符。等价于[^ \f\n\r\t\v]。</td>
+</tr>
+<tr>
+<td align="left"><code>\t</code></td>
+<td align="left">匹配一个制表符。等价于\x09和\cI。</td>
+</tr>
+<tr>
+<td align="left"><code>\v</code></td>
+<td align="left">匹配一个垂直制表符。等价于\x0b和\cK。</td>
+</tr>
+<tr>
+<td align="left"><code>\w</code></td>
+<td align="left">匹配包括下划线的任何单词字符。等价于“<code>[A-Za-z0-9_]</code>”。注意Unicode正则表达式会匹配中文字符。</td>
+</tr>
+<tr>
+<td align="left"><code>\W</code></td>
+<td align="left">匹配任何非单词字符。等价于“<code>[^A-Za-z0-9_]</code>”。</td>
+</tr>
+<tr>
+<td align="left"><code>\xnn</code></td>
+<td align="left">十六进制转义字符序列。匹配两个十六进制数字nn表示的字符。例如，“<code>\x41</code>”匹配“<code>A</code>”。“<code>\x041</code>”则等价于“<code>\x04&amp;1</code>”。正则表达式中可以使用ASCII编码。.</td>
+</tr>
+<tr>
+<td align="left"><code>\num</code></td>
+<td align="left">向后引用（back-reference）一个子字符串（substring），该子字符串与正则表达式的第num个用括号围起来的捕捉群（capture group）子表达式（subexpression）匹配。其中num是从1开始的十进制正整数，其上限可能是9[注 2]、31[注 3]、99甚至无限[注 4]。例如：“<code>(.)\1</code>”匹配两个连续的相同字符。</td>
+</tr>
+<tr>
+<td align="left"><code>\n</code></td>
+<td align="left">标识一个八进制转义值或一个向后引用。如果\n之前至少n个获取的子表达式，则n为向后引用。否则，如果n为八进制数字（0-7），则n为一个八进制转义值。</td>
+</tr>
+<tr>
+<td align="left"><code>\nm</code></td>
+<td align="left">3位八进制数字，标识一个八进制转义值或一个向后引用。如果\nm之前至少有nm个获得子表达式，则nm为向后引用。如果\nm之前至少有n个获取，则n为一个后跟文字m的向后引用。如果前面的条件都不满足，若n和m均为八进制数字（0-7），则\nm将匹配八进制转义值nm。</td>
+</tr>
+<tr>
+<td align="left"><code>\nml</code></td>
+<td align="left">如果n为八进制数字（0-3），且m和l均为八进制数字（0-7），则匹配八进制转义值nml。</td>
+</tr>
+<tr>
+<td align="left"><code>\un</code></td>
+<td align="left">Unicode转义字符序列。其中n是一个用四个十六进制数字表示的Unicode字符。例如，\u00A9匹配版权符号（©）。</td>
+</tr>
+</tbody></table>
+<p>常用的匹配</p>
+<table>
+<thead>
+<tr>
+<th align="center">字符</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">\d</td>
+<td align="center">代表任意数字，就是阿拉伯数字 0-9 这些玩意。</td>
+</tr>
+<tr>
+<td align="center"><code>\D</code></td>
+<td align="center">大写的就是和小写的唱反调，\d 你代表的是任意数字是吧？那么我 \D 就代表不是数字的。</td>
+</tr>
+<tr>
+<td align="center"><code>\w</code></td>
+<td align="center">代表字母，数字，下划线。也就是 a-z、A-Z、0-9、_。</td>
+</tr>
+<tr>
+<td align="center"><code>\W</code></td>
+<td align="center">跟 \w 唱反调，代表不是字母，不是数字，不是下划线的。</td>
+</tr>
+<tr>
+<td align="center">\n</td>
+<td align="center">代表一个换行。</td>
+</tr>
+<tr>
+<td align="center"><code>\r</code></td>
+<td align="center">代表一个回车。</td>
+</tr>
+<tr>
+<td align="center"><code>\f</code></td>
+<td align="center">代表换页。</td>
+</tr>
+<tr>
+<td align="center"><code>\t</code></td>
+<td align="center">代表一个 Tab 。</td>
+</tr>
+<tr>
+<td align="center"><code>\s</code></td>
+<td align="center">代表所有的空白字符，也就是上面这个：\n、\r、\t、\f。</td>
+</tr>
+<tr>
+<td align="center"><code>\S</code></td>
+<td align="center">跟 \s 唱反调，代表所有不是空白的字符。</td>
+</tr>
+<tr>
+<td align="center"><code>\A</code></td>
+<td align="center">代表字符串的开始。</td>
+</tr>
+<tr>
+<td align="center"><code>\Z</code></td>
+<td align="center">代表字符串的结束。</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">匹配字符串开始的位置。</td>
+</tr>
+<tr>
+<td align="center">$</td>
+<td align="center">匹配字符创结束的位置。</td>
+</tr>
+<tr>
+<td align="center">.</td>
+<td align="center">代表所有的单个字符，除了 \n \r</td>
+</tr>
+<tr>
+<td align="center"><code>[...]</code></td>
+<td align="center">代表在 [] 范围内的字符，比如 [a-z] 就代表 a到z的字母</td>
+</tr>
+<tr>
+<td align="center"><code>[^...]</code></td>
+<td align="center">跟 […] 唱反调，代表不在 [] 范围内的字符</td>
+</tr>
+<tr>
+<td align="center">{n}</td>
+<td align="center">匹配在 {n} 前面的东西，比如: o{2} 不能匹配 Bob 中的 o ，但是能匹配 food 中的两个o。</td>
+</tr>
+<tr>
+<td align="center"><code>{n,m}</code></td>
+<td align="center">匹配在 {n,m} 前面的东西，比如：o{1,3} 将匹配“fooooood”中的前三个o。</td>
+</tr>
+<tr>
+<td align="center"><code>{n，}</code></td>
+<td align="center">匹配在 {n,} 前面的东西，比如：o{2,} 不能匹配“Bob”中的“o”，但能匹配“foooood”中的所有o。</td>
+</tr>
+<tr>
+<td align="center"><code>*</code></td>
+<td align="center">和 {0,} 一个样，匹配 * 前面的 0 次或多次。 比如 zo* 能匹配“z”、“zo”以及“zoo”。</td>
+</tr>
+<tr>
+<td align="center"><code>+</code></td>
+<td align="center">和{1，} 一个样，匹配 + 前面 1 次或多次。 比如 zo+”能匹配“zo”以及“zoo”，但不能匹配“z”。</td>
+</tr>
+<tr>
+<td align="center"><code>？</code></td>
+<td align="center">和{0,1} 一个样，匹配 ？前面 0 次或 1 次。</td>
+</tr>
+<tr>
+<td align="center">a|b</td>
+<td align="center">匹配 a 或者 b。</td>
+</tr>
+<tr>
+<td align="center"><code>（）</code></td>
+<td align="center">匹配括号里面的内容。</td>
+</tr>
+</tbody></table>
 
             </div>
             <hr/>
@@ -486,7 +691,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://youzg.cc/2019/05/01/2019-memory-manage01/">http://youzg.cc/2019/05/01/2019-memory-manage01/</a>
+                    <a href="http://youzg.cc/2020/08/20/2020-regex-table/">http://youzg.cc/2020/08/20/2020-regex-table/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -524,16 +729,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/iOS/">
-                                    <span class="chip bg-color">iOS</span>
+                                <a href="/tags/CS/">
+                                    <span class="chip bg-color">CS</span>
                                 </a>
                             
-                                <a href="/tags/Swift/">
-                                    <span class="chip bg-color">Swift</span>
-                                </a>
-                            
-                                <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
-                                    <span class="chip bg-color">内存管理</span>
+                                <a href="/tags/Tool/">
+                                    <span class="chip bg-color">Tool</span>
                                 </a>
                             
                         </div>
@@ -838,9 +1039,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/08/20/2020-regex-table/">
                     <div class="card-image">
@@ -857,9 +1059,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-20
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -872,6 +1074,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -894,31 +1097,30 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2018/09/07/2020-hello-world/">
+                <a href="/2019/05/01/2019-memory-manage01/">
                     <div class="card-image">
                         
+                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv6yxk8msj312s0u0h0v.jpg" class="responsive-img" alt="使用CADisplayLink、NSTimer有什么注意点">
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="尝试部署">
-                        
-                        <span class="card-title">尝试部署</span>
+                        <span class="card-title">使用CADisplayLink、NSTimer有什么注意点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            这是你自定义的文章摘要内容，如果这个属性有值，文章卡片摘要就显示这段文字，否则程序会自动截取文章的部分内容作为摘要
+                            iOS在调用方法CADisplayLink、NSTimer时使用了target造成循环引用的原因和解决方案
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-09-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-05-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Demo/" class="post-category">
-                                    Demo
+                            <a href="/categories/iOS/" class="post-category">
+                                    iOS
                                 </a>
                             
                             
@@ -928,12 +1130,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Demo/">
-                        <span class="chip bg-color">Demo</span>
+                    <a href="/tags/iOS/">
+                        <span class="chip bg-color">iOS</span>
                     </a>
                     
-                    <a href="/tags/Markdown/">
-                        <span class="chip bg-color">Markdown</span>
+                    <a href="/tags/Swift/">
+                        <span class="chip bg-color">Swift</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+                        <span class="chip bg-color">内存管理</span>
                     </a>
                     
                 </div>
