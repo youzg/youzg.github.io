@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="iOS的内存布局, youzg">
+    <meta name="keywords" content="简化TableViewCell, youzg">
     <meta name="description" content="唯刀百辟 唯心不易">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>iOS的内存布局 | youzg</title>
+    <title>简化TableViewCell | youzg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -201,12 +201,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://tva1.sinaimg.cn/large/007S8ZIlgy1gi40e76y0gj31id0u0nc8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyjyt969gj30hs0buwga.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">iOS的内存布局</h1>
+                    <h1 class="description center-align post-title">简化TableViewCell</h1>
                 </div>
             </div>
         </div>
@@ -331,10 +331,6 @@
                                 <span class="chip bg-color">Swift</span>
                             </a>
                         
-                            <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
-                                <span class="chip bg-color">内存管理</span>
-                            </a>
-                        
                     </div>
                     
                 </div>
@@ -372,46 +368,28 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi3c43q3ptj30650a5dgd.jpg" alt="内存结构"></p>
-<ul>
-<li><p>代码段<br>编译后的代码</p>
-</li>
-<li><p>数据段<br>  1.字符串常量：如<code>let string = &quot;string&quot;</code><br>  2.已初始化数据：已初始化的全局变量、静态变量等<br>  3.未初始化数据：未初始化的全局变量、静态变量等</p>
-</li>
-<li><p>堆 (分配地址由低到高，即分配的内存地址越来越大)<br>通过<code>alloc</code>、<code>malloc</code>、<code>calloc</code>等动态分配的空间</p>
-</li>
-<li><p>栈（分配地址由高到低）<br>函数调用开销,如局部变量。</p>
-</li>
-</ul>
-<p>代码</p>
-<pre class=" language-swift"><code class="language-swift">int a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-int b<span class="token punctuation">;</span>
-
-int <span class="token function">main</span><span class="token punctuation">(</span>int argc<span class="token punctuation">,</span> char <span class="token operator">*</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token builtin">NSString</span> <span class="token operator">*</span> appDelegateClassName<span class="token punctuation">;</span>
-    @autoreleasepool <span class="token punctuation">{</span>
-        appDelegateClassName <span class="token operator">=</span> <span class="token function">NSStringFromClass</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token builtin">AppDelegate</span> <span class="token keyword">class</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">static</span> int c <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
-        <span class="token keyword">static</span> int d<span class="token punctuation">;</span>
-        int e<span class="token punctuation">;</span>
-        int f <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
-        <span class="token builtin">NSString</span> <span class="token operator">*</span>g <span class="token operator">=</span> @<span class="token string">"123"</span><span class="token punctuation">;</span>
-        <span class="token builtin">NSObject</span> <span class="token operator">*</span>h <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token builtin">NSObject</span> alloc<span class="token punctuation">]</span> <span class="token keyword">init</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token function">NSLog</span><span class="token punctuation">(</span>@<span class="token string">"\n&amp;a=%p\n&amp;b=%p\n&amp;c=%p\n&amp;d=%p\n&amp;e=%p\n&amp;f=%p\n&amp;g=%p\n&amp;h=%p\n"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>a<span class="token punctuation">,</span> <span class="token operator">&amp;</span>b<span class="token punctuation">,</span> <span class="token operator">&amp;</span>c<span class="token punctuation">,</span> <span class="token operator">&amp;</span>d<span class="token punctuation">,</span> <span class="token operator">&amp;</span>e<span class="token punctuation">,</span> <span class="token operator">&amp;</span>f<span class="token punctuation">,</span> g<span class="token punctuation">,</span> h<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token function">UIApplicationMain</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token constant">nil</span><span class="token punctuation">,</span> appDelegateClassName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <h4 id="简化tableView-cellForRowAt-中多种Cell的情况"><a href="#简化tableView-cellForRowAt-中多种Cell的情况" class="headerlink" title="简化tableView(_:cellForRowAt:)中多种Cell的情况"></a>简化<code>tableView(_:cellForRowAt:)</code>中多种Cell的情况</h4><p><a href="链接：https://juejin.im/post/6862954764179603469">来自<code>YuLeiFuYun的掘金</code></a></p>
+<pre class=" language-swift"><code class="language-swift">protocol <span class="token builtin">Configurable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">func</span> <span class="token function">configure</span><span class="token punctuation">(</span><span class="token number">_</span> model<span class="token punctuation">:</span> <span class="token builtin">Any</span><span class="token operator">?</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 
-<span class="token comment" spellcheck="true">/// 输出</span>
-<span class="token operator">&amp;</span>a<span class="token operator">=</span><span class="token number">0x100151578</span>
-<span class="token operator">&amp;</span>b<span class="token operator">=</span><span class="token number">0x100151644</span>
-<span class="token operator">&amp;</span>c<span class="token operator">=</span><span class="token number">0x10015157c</span>
-<span class="token operator">&amp;</span>d<span class="token operator">=</span><span class="token number">0x100151640</span>
-<span class="token operator">&amp;</span>e<span class="token operator">=</span><span class="token number">0x16fcbb874</span>
-<span class="token operator">&amp;</span>f<span class="token operator">=</span><span class="token number">0x16fcbb870</span>
-<span class="token operator">&amp;</span>g<span class="token operator">=</span><span class="token number">0x10014c028</span>
-<span class="token operator">&amp;</span>h<span class="token operator">=</span><span class="token number">0x2814a4150</span></code></pre>
+<span class="token keyword">extension</span> <span class="token builtin">UITableViewCell</span><span class="token punctuation">:</span> <span class="token builtin">Configurable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">func</span> <span class="token function">configure</span><span class="token punctuation">(</span><span class="token number">_</span> model<span class="token punctuation">:</span> <span class="token builtin">Any</span><span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">extension</span> <span class="token builtin">UITableView</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">func</span> dequeueReusableCell<span class="token operator">&lt;</span>T<span class="token punctuation">:</span> <span class="token builtin">Configurable</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token keyword">for</span> indexPath<span class="token punctuation">:</span> <span class="token builtin">IndexPath</span><span class="token punctuation">,</span> with identifiers<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token builtin">String</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> T <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>index<span class="token punctuation">,</span> identifier<span class="token punctuation">)</span> <span class="token keyword">in</span> identifiers<span class="token punctuation">.</span><span class="token function">enumerated</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">where</span> index <span class="token operator">==</span> indexPath<span class="token punctuation">.</span>section <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token keyword">let</span> cell <span class="token operator">=</span> <span class="token function">dequeueReusableCell</span><span class="token punctuation">(</span>withIdentifier<span class="token punctuation">:</span> identifier<span class="token punctuation">,</span> <span class="token keyword">for</span><span class="token punctuation">:</span> indexPath<span class="token punctuation">)</span> <span class="token keyword">as</span><span class="token operator">?</span> T <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> cell
+            <span class="token punctuation">}</span>
+            <span class="token function">fatalError</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">fatalError</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
 
             </div>
             <hr/>
@@ -437,7 +415,7 @@ int <span class="token function">main</span><span class="token punctuation">(</s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://youzg.cc/2020/01/01/2020-memory-manage02/">http://youzg.cc/2020/01/01/2020-memory-manage02/</a>
+                    <a href="http://youzg.cc/2020/01/01/2020-tableview01/">http://youzg.cc/2020/01/01/2020-tableview01/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -481,10 +459,6 @@ int <span class="token function">main</span><span class="token punctuation">(</s
                             
                                 <a href="/tags/Swift/">
                                     <span class="chip bg-color">Swift</span>
-                                </a>
-                            
-                                <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
-                                    <span class="chip bg-color">内存管理</span>
                                 </a>
                             
                         </div>
@@ -793,58 +767,6 @@ int <span class="token function">main</span><span class="token punctuation">(</s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/20/2020-regex-list/">
-                    <div class="card-image">
-                        
-                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyjyt969gj30hs0buwga.jpg" class="responsive-img" alt="正则表达式速查表">
-                        
-                        <span class="card-title">正则表达式速查表</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            正则表达式速查表
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-20
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/CS/" class="post-category">
-                                    CS
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/CS/">
-                        <span class="chip bg-color">CS</span>
-                    </a>
-                    
-                    <a href="/tags/Tool/">
-                        <span class="chip bg-color">Tool</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2020/01/01/2020-memory-taggedpointer/">
                     <div class="card-image">
                         
@@ -860,8 +782,60 @@ int <span class="token function">main</span><span class="token punctuation">(</s
                         
                     </div>
                     <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-01-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/iOS/" class="post-category">
+                                    iOS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/iOS/">
+                        <span class="chip bg-color">iOS</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+                        <span class="chip bg-color">内存管理</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/05/01/2019-memory-manage01/">
+                    <div class="card-image">
+                        
+                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv6yxk8msj312s0u0h0v.jpg" class="responsive-img" alt="使用CADisplayLink、NSTimer有什么注意点">
+                        
+                        <span class="card-title">使用CADisplayLink、NSTimer有什么注意点</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            iOS在调用方法CADisplayLink、NSTimer时使用了target造成循环引用的原因和解决方案
+                        
+                    </div>
+                    <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-05-01
                             </span>
                         <span class="publish-author">
                             
@@ -880,6 +854,10 @@ int <span class="token function">main</span><span class="token punctuation">(</s
                     
                     <a href="/tags/iOS/">
                         <span class="chip bg-color">iOS</span>
+                    </a>
+                    
+                    <a href="/tags/Swift/">
+                        <span class="chip bg-color">Swift</span>
                     </a>
                     
                     <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">

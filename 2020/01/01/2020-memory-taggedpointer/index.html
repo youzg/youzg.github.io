@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="iOS的内存布局, youzg">
+    <meta name="keywords" content="OC中的Tagged Pointer, youzg">
     <meta name="description" content="唯刀百辟 唯心不易">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>iOS的内存布局 | youzg</title>
+    <title>OC中的Tagged Pointer | youzg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -201,12 +201,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://tva1.sinaimg.cn/large/007S8ZIlgy1gi40e76y0gj31id0u0nc8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv6yxk8msj312s0u0h0v.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">iOS的内存布局</h1>
+                    <h1 class="description center-align post-title">OC中的Tagged Pointer</h1>
                 </div>
             </div>
         </div>
@@ -327,10 +327,6 @@
                                 <span class="chip bg-color">iOS</span>
                             </a>
                         
-                            <a href="/tags/Swift/">
-                                <span class="chip bg-color">Swift</span>
-                            </a>
-                        
                             <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
                                 <span class="chip bg-color">内存管理</span>
                             </a>
@@ -372,46 +368,53 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi3c43q3ptj30650a5dgd.jpg" alt="内存结构"></p>
+                <p>OC中Tagged Pointer</p>
 <ul>
-<li><p>代码段<br>编译后的代码</p>
-</li>
-<li><p>数据段<br>  1.字符串常量：如<code>let string = &quot;string&quot;</code><br>  2.已初始化数据：已初始化的全局变量、静态变量等<br>  3.未初始化数据：未初始化的全局变量、静态变量等</p>
-</li>
-<li><p>堆 (分配地址由低到高，即分配的内存地址越来越大)<br>通过<code>alloc</code>、<code>malloc</code>、<code>calloc</code>等动态分配的空间</p>
-</li>
-<li><p>栈（分配地址由高到低）<br>函数调用开销,如局部变量。</p>
-</li>
+<li>从64bit开始，iOS引入了<code>Tagged Pointer</code>技术，用于优化<code>NSNumber、NSDate、NSString</code>等小对象的存储</li>
+<li>在没有实用<code>Tagged Pointer</code>之前，<code>NSNumber</code> 等对象需要动态分配内存、维护引用计数等，<code>NSNumber</code>指针存储是堆中<code>NSNumber</code>对象的地址值</li>
+<li>实用<code>Tagged Pointer</code>之后，<code>NSNumber</code>指针里面存储的数据变成了：<code>Tag + Data</code>，也就是将数据直接存储在了指针中</li>
+<li>mac平台上指针的最低有效位为1时是<code>Tagged Pointer</code>，iOS平台的最高位有效位为1时是<code>Tagged Pointer</code>且1&lt;&lt;63</li>
+<li>当指针不够存储数据时，才会实用动态分配内存的方式来存储数据</li>
+<li><code>obj_msgSend</code>能识别<code>Tagged Pointer</code>，比如<code>NSNumber</code>的<code>intValue</code>方法，直接从指针提取数据，节省了以前的调用开销</li>
 </ul>
-<p>代码</p>
-<pre class=" language-swift"><code class="language-swift">int a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-int b<span class="token punctuation">;</span>
+<pre class=" language-swift"><code class="language-swift">@<span class="token function">property</span> <span class="token punctuation">(</span>copy<span class="token punctuation">,</span> nonatomic<span class="token punctuation">)</span> <span class="token builtin">NSString</span> <span class="token operator">*</span>name<span class="token punctuation">;</span>
 
-int <span class="token function">main</span><span class="token punctuation">(</span>int argc<span class="token punctuation">,</span> char <span class="token operator">*</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token builtin">NSString</span> <span class="token operator">*</span> appDelegateClassName<span class="token punctuation">;</span>
-    @autoreleasepool <span class="token punctuation">{</span>
-        appDelegateClassName <span class="token operator">=</span> <span class="token function">NSStringFromClass</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token builtin">AppDelegate</span> <span class="token keyword">class</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">static</span> int c <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
-        <span class="token keyword">static</span> int d<span class="token punctuation">;</span>
-        int e<span class="token punctuation">;</span>
-        int f <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
-        <span class="token builtin">NSString</span> <span class="token operator">*</span>g <span class="token operator">=</span> @<span class="token string">"123"</span><span class="token punctuation">;</span>
-        <span class="token builtin">NSObject</span> <span class="token operator">*</span>h <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token builtin">NSObject</span> alloc<span class="token punctuation">]</span> <span class="token keyword">init</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token function">NSLog</span><span class="token punctuation">(</span>@<span class="token string">"\n&amp;a=%p\n&amp;b=%p\n&amp;c=%p\n&amp;d=%p\n&amp;e=%p\n&amp;f=%p\n&amp;g=%p\n&amp;h=%p\n"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>a<span class="token punctuation">,</span> <span class="token operator">&amp;</span>b<span class="token punctuation">,</span> <span class="token operator">&amp;</span>c<span class="token punctuation">,</span> <span class="token operator">&amp;</span>d<span class="token punctuation">,</span> <span class="token operator">&amp;</span>e<span class="token punctuation">,</span> <span class="token operator">&amp;</span>f<span class="token punctuation">,</span> g<span class="token punctuation">,</span> h<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        dispatch_queue_t queue <span class="token operator">=</span> <span class="token function">dispatch_get_global_queue</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">dispatch_async</span><span class="token punctuation">(</span>queue<span class="token punctuation">,</span> <span class="token operator">^</span><span class="token punctuation">{</span>
+            <span class="token keyword">self</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">NSString</span> stringWithFormat<span class="token punctuation">:</span>@<span class="token string">"abcdefghijklmno"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi4dynnp9gj30nd03t3zp.jpg" alt="crash"></p>
+<p>Set方法的本质</p>
+<pre class=" language-swift"><code class="language-swift"><span class="token operator">-</span> <span class="token punctuation">(</span>void<span class="token punctuation">)</span>setName<span class="token punctuation">:</span><span class="token punctuation">(</span><span class="token builtin">NSString</span> <span class="token operator">*</span><span class="token punctuation">)</span>name <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_name <span class="token operator">!=</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token punctuation">[</span>_name release<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//多个线程同时执行release导致</span>
+        _name <span class="token operator">=</span> <span class="token punctuation">[</span>name copy<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token function">UIApplicationMain</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token constant">nil</span><span class="token punctuation">,</span> appDelegateClassName<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>解决方案</p>
+<ul>
+<li><code>name</code>属性用<code>atomic</code>修饰</li>
+<li>赋值位置加锁</li>
+</ul>
+<p>而如果较短的字符串时，代码并不会carsh，使用的<code>TaggedPointer</code></p>
+<pre class=" language-swift"><code class="language-swift">dispatch_queue_t queue <span class="token operator">=</span> <span class="token function">dispatch_get_global_queue</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">dispatch_async</span><span class="token punctuation">(</span>queue<span class="token punctuation">,</span> <span class="token operator">^</span><span class="token punctuation">{</span>
+            <span class="token keyword">self</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">NSString</span> stringWithFormat<span class="token punctuation">:</span>@<span class="token string">"abc"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-<span class="token comment" spellcheck="true">/// 输出</span>
-<span class="token operator">&amp;</span>a<span class="token operator">=</span><span class="token number">0x100151578</span>
-<span class="token operator">&amp;</span>b<span class="token operator">=</span><span class="token number">0x100151644</span>
-<span class="token operator">&amp;</span>c<span class="token operator">=</span><span class="token number">0x10015157c</span>
-<span class="token operator">&amp;</span>d<span class="token operator">=</span><span class="token number">0x100151640</span>
-<span class="token operator">&amp;</span>e<span class="token operator">=</span><span class="token number">0x16fcbb874</span>
-<span class="token operator">&amp;</span>f<span class="token operator">=</span><span class="token number">0x16fcbb870</span>
-<span class="token operator">&amp;</span>g<span class="token operator">=</span><span class="token number">0x10014c028</span>
-<span class="token operator">&amp;</span>h<span class="token operator">=</span><span class="token number">0x2814a4150</span></code></pre>
+    <span class="token builtin">NSString</span> <span class="token operator">*</span>str1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">NSString</span> stringWithFormat<span class="token punctuation">:</span>@<span class="token string">"abcdefghijklmno"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token builtin">NSString</span> <span class="token operator">*</span>str2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">NSString</span> stringWithFormat<span class="token punctuation">:</span>@<span class="token string">"abc"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">NSLog</span><span class="token punctuation">(</span>@<span class="token string">"\nstr1:%@\nstr2:%@"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>str1 <span class="token keyword">class</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>str2 <span class="token keyword">class</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">NSLog</span><span class="token punctuation">(</span>@<span class="token string">"\nstr1:%p\nstr2:%p"</span><span class="token punctuation">,</span> str1<span class="token punctuation">,</span> str2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+str1<span class="token punctuation">:</span>__NSCFString
+str2<span class="token punctuation">:</span><span class="token builtin">NSTaggedPointerString</span>
+str1<span class="token punctuation">:</span><span class="token number">0x281aac090</span> <span class="token comment" spellcheck="true">//明显不够64位</span>
+str2<span class="token punctuation">:</span><span class="token number">0xbabe312ffd3f4e86</span> <span class="token comment" spellcheck="true">//这里是babe 312f fd3f 4e86共64位，且最高有效位是1</span></code></pre>
 
             </div>
             <hr/>
@@ -437,7 +440,7 @@ int <span class="token function">main</span><span class="token punctuation">(</s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://youzg.cc/2020/01/01/2020-memory-manage02/">http://youzg.cc/2020/01/01/2020-memory-manage02/</a>
+                    <a href="http://youzg.cc/2020/01/01/2020-memory-taggedpointer/">http://youzg.cc/2020/01/01/2020-memory-taggedpointer/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -477,10 +480,6 @@ int <span class="token function">main</span><span class="token punctuation">(</s
                             
                                 <a href="/tags/iOS/">
                                     <span class="chip bg-color">iOS</span>
-                                </a>
-                            
-                                <a href="/tags/Swift/">
-                                    <span class="chip bg-color">Swift</span>
                                 </a>
                             
                                 <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
@@ -793,30 +792,30 @@ int <span class="token function">main</span><span class="token punctuation">(</s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/20/2020-regex-list/">
+                <a href="/2020/01/01/2020-memory-manage02/">
                     <div class="card-image">
                         
-                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyjyt969gj30hs0buwga.jpg" class="responsive-img" alt="正则表达式速查表">
+                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi40e76y0gj31id0u0nc8.jpg" class="responsive-img" alt="iOS的内存布局">
                         
-                        <span class="card-title">正则表达式速查表</span>
+                        <span class="card-title">iOS的内存布局</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            正则表达式速查表
+                            iOS内存布局
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-20
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-01-01
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CS/" class="post-category">
-                                    CS
+                            <a href="/categories/iOS/" class="post-category">
+                                    iOS
                                 </a>
                             
                             
@@ -826,12 +825,16 @@ int <span class="token function">main</span><span class="token punctuation">(</s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CS/">
-                        <span class="chip bg-color">CS</span>
+                    <a href="/tags/iOS/">
+                        <span class="chip bg-color">iOS</span>
                     </a>
                     
-                    <a href="/tags/Tool/">
-                        <span class="chip bg-color">Tool</span>
+                    <a href="/tags/Swift/">
+                        <span class="chip bg-color">Swift</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+                        <span class="chip bg-color">内存管理</span>
                     </a>
                     
                 </div>
@@ -845,18 +848,18 @@ int <span class="token function">main</span><span class="token punctuation">(</s
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/01/2020-memory-taggedpointer/">
+                <a href="/2020/01/01/2020-tableview01/">
                     <div class="card-image">
                         
-                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv6yxk8msj312s0u0h0v.jpg" class="responsive-img" alt="OC中的Tagged Pointer">
+                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyjyt969gj30hs0buwga.jpg" class="responsive-img" alt="简化TableViewCell">
                         
-                        <span class="card-title">OC中的Tagged Pointer</span>
+                        <span class="card-title">简化TableViewCell</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            iOS在`NSNumber、NSDate、NSString`等小对象的存储使用`Tagged Pointer`
+                            简化`tableView(_:cellForRowAt:)`中多种Cell的情况
                         
                     </div>
                     <div class="publish-info">
@@ -882,8 +885,8 @@ int <span class="token function">main</span><span class="token punctuation">(</s
                         <span class="chip bg-color">iOS</span>
                     </a>
                     
-                    <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
-                        <span class="chip bg-color">内存管理</span>
+                    <a href="/tags/Swift/">
+                        <span class="chip bg-color">Swift</span>
                     </a>
                     
                 </div>
