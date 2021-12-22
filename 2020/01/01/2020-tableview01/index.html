@@ -400,10 +400,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <meta name="referrer" content="no-referrer" />
-#### 简化`tableView(_:cellForRowAt:)`中多种Cell的情况
-
-<p><a href="链接：https://juejin.im/post/6862954764179603469">来自<code>YuLeiFuYun的掘金</code></a></p>
+                <h4 id="简化tableView-cellForRowAt-中多种Cell的情况"><a href="#简化tableView-cellForRowAt-中多种Cell的情况" class="headerlink" title="简化tableView(_:cellForRowAt:)中多种Cell的情况"></a>简化<code>tableView(_:cellForRowAt:)</code>中多种Cell的情况</h4><p><a href="链接：https://juejin.im/post/6862954764179603469">来自<code>YuLeiFuYun的掘金</code></a></p>
 <pre class=" language-swift"><code class="language-swift">protocol <span class="token builtin">Configurable</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
     <span class="token keyword">func</span> <span class="token function">configure</span><span class="token punctuation">(</span><span class="token number">_</span> model<span class="token punctuation">:</span> <span class="token builtin">Any</span><span class="token operator">?</span><span class="token punctuation">)</span>
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
@@ -810,18 +807,18 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/01/01/2020-memory-manage02/">
+                <a href="/2020/01/01/2020-memory-taggedpointer/">
                     <div class="card-image">
                         
-                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi40e76y0gj31id0u0nc8.jpg" class="responsive-img" alt="iOS的内存布局">
+                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv6yxk8msj312s0u0h0v.jpg" class="responsive-img" alt="OC中的Tagged Pointer">
                         
-                        <span class="card-title">iOS的内存布局</span>
+                        <span class="card-title">OC中的Tagged Pointer</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            iOS内存布局
+                            iOS在`NSNumber、NSDate、NSString`等小对象的存储使用`Tagged Pointer`
                         
                     </div>
                     <div class="publish-info">
@@ -847,10 +844,6 @@
                         <span class="chip bg-color">iOS</span>
                     </a>
                     
-                    <a href="/tags/Swift/">
-                        <span class="chip bg-color">Swift</span>
-                    </a>
-                    
                     <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
                         <span class="chip bg-color">内存管理</span>
                     </a>
@@ -866,23 +859,23 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/01/2020-memory-taggedpointer/">
+                <a href="/2019/05/01/2019-memory-manage01/">
                     <div class="card-image">
                         
-                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv6yxk8msj312s0u0h0v.jpg" class="responsive-img" alt="OC中的Tagged Pointer">
+                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv6yxk8msj312s0u0h0v.jpg" class="responsive-img" alt="使用CADisplayLink、NSTimer有什么注意点">
                         
-                        <span class="card-title">OC中的Tagged Pointer</span>
+                        <span class="card-title">使用CADisplayLink、NSTimer有什么注意点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            iOS在`NSNumber、NSDate、NSString`等小对象的存储使用`Tagged Pointer`
+                            iOS在调用方法CADisplayLink、NSTimer时使用了target造成循环引用的原因和解决方案
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-05-01
                             </span>
                         <span class="publish-author">
                             
@@ -901,6 +894,10 @@
                     
                     <a href="/tags/iOS/">
                         <span class="chip bg-color">iOS</span>
+                    </a>
+                    
+                    <a href="/tags/Swift/">
+                        <span class="chip bg-color">Swift</span>
                     </a>
                     
                     <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">

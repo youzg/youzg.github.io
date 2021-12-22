@@ -404,9 +404,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <meta name="referrer" content="no-referrer" />
-
-<p>CADisplayLink、NSTimer会对target产生强引用，此时target又对他们产生强引用，那么就会触发循环引用</p>
+                <p>CADisplayLink、NSTimer会对target产生强引用，此时target又对他们产生强引用，那么就会触发循环引用</p>
 <p>以下情况都会触发循环引用</p>
 <blockquote>
 <p>CADisplayLink<br>是用于同步屏幕刷新频率的计数器，调用频率和屏幕刷新频率一致，目前基本都是60fps</p>
@@ -954,18 +952,18 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/01/01/2020-memory-taggedpointer/">
+                <a href="/2020/01/01/2020-tableview01/">
                     <div class="card-image">
                         
-                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghv6yxk8msj312s0u0h0v.jpg" class="responsive-img" alt="OC中的Tagged Pointer">
+                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyjyt969gj30hs0buwga.jpg" class="responsive-img" alt="简化TableViewCell">
                         
-                        <span class="card-title">OC中的Tagged Pointer</span>
+                        <span class="card-title">简化TableViewCell</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            iOS在`NSNumber、NSDate、NSString`等小对象的存储使用`Tagged Pointer`
+                            简化`tableView(_:cellForRowAt:)`中多种Cell的情况
                         
                     </div>
                     <div class="publish-info">
@@ -991,8 +989,8 @@
                         <span class="chip bg-color">iOS</span>
                     </a>
                     
-                    <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
-                        <span class="chip bg-color">内存管理</span>
+                    <a href="/tags/Swift/">
+                        <span class="chip bg-color">Swift</span>
                     </a>
                     
                 </div>
