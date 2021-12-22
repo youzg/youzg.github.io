@@ -404,7 +404,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>CADisplayLink、NSTimer会对target产生强引用，此时target又对他们产生强引用，那么就会触发循环引用</p>
+                <meta name="referrer" content="no-referrer" />
+
+<p>CADisplayLink、NSTimer会对target产生强引用，此时target又对他们产生强引用，那么就会触发循环引用</p>
 <p>以下情况都会触发循环引用</p>
 <blockquote>
 <p>CADisplayLink<br>是用于同步屏幕刷新频率的计数器，调用频率和屏幕刷新频率一致，目前基本都是60fps</p>
