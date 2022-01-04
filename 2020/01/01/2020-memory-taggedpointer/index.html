@@ -410,34 +410,34 @@
 <li>当指针不够存储数据时，才会实用动态分配内存的方式来存储数据</li>
 <li><code>obj_msgSend</code>能识别<code>Tagged Pointer</code>，比如<code>NSNumber</code>的<code>intValue</code>方法，直接从指针提取数据，节省了以前的调用开销</li>
 </ul>
-<pre class=" language-swift"><code class="language-swift">@<span class="token function">property</span> <span class="token punctuation">(</span>copy<span class="token punctuation">,</span> nonatomic<span class="token punctuation">)</span> <span class="token builtin">NSString</span> <span class="token operator">*</span>name<span class="token punctuation">;</span>
+<pre class="line-numbers language-swift"><code class="language-swift">@<span class="token function">property</span> <span class="token punctuation">(</span>copy<span class="token punctuation">,</span> nonatomic<span class="token punctuation">)</span> <span class="token builtin">NSString</span> <span class="token operator">*</span>name<span class="token punctuation">;</span>
 
         dispatch_queue_t queue <span class="token operator">=</span> <span class="token function">dispatch_get_global_queue</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        <span class="token function">dispatch_async</span><span class="token punctuation">(</span>queue<span class="token punctuation">,</span> <span class="token operator">^</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">dispatch_async</span><span class="token punctuation">(</span>queue<span class="token punctuation">,</span> <span class="token operator">^</span><span class="token punctuation">{</span>
             <span class="token keyword">self</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">NSString</span> stringWithFormat<span class="token punctuation">:</span>@<span class="token string">"abcdefghijklmno"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi4dynnp9gj30nd03t3zp.jpg" alt="crash"></p>
 <p>Set方法的本质</p>
-<pre class=" language-swift"><code class="language-swift"><span class="token operator">-</span> <span class="token punctuation">(</span>void<span class="token punctuation">)</span>setName<span class="token punctuation">:</span><span class="token punctuation">(</span><span class="token builtin">NSString</span> <span class="token operator">*</span><span class="token punctuation">)</span>name <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>_name <span class="token operator">!=</span> name<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-swift"><code class="language-swift"><span class="token operator">-</span> <span class="token punctuation">(</span>void<span class="token punctuation">)</span>setName<span class="token punctuation">:</span><span class="token punctuation">(</span><span class="token builtin">NSString</span> <span class="token operator">*</span><span class="token punctuation">)</span>name <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_name <span class="token operator">!=</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
                 <span class="token punctuation">[</span>_name release<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//多个线程同时执行release导致</span>
         _name <span class="token operator">=</span> <span class="token punctuation">[</span>name copy<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>解决方案</p>
 <ul>
 <li><code>name</code>属性用<code>atomic</code>修饰</li>
 <li>赋值位置加锁</li>
 </ul>
 <p>而如果较短的字符串时，代码并不会carsh，使用的<code>TaggedPointer</code></p>
-<pre class=" language-swift"><code class="language-swift">dispatch_queue_t queue <span class="token operator">=</span> <span class="token function">dispatch_get_global_queue</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-        <span class="token function">dispatch_async</span><span class="token punctuation">(</span>queue<span class="token punctuation">,</span> <span class="token operator">^</span><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-swift"><code class="language-swift">dispatch_queue_t queue <span class="token operator">=</span> <span class="token function">dispatch_get_global_queue</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">dispatch_async</span><span class="token punctuation">(</span>queue<span class="token punctuation">,</span> <span class="token operator">^</span><span class="token punctuation">{</span>
             <span class="token keyword">self</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">NSString</span> stringWithFormat<span class="token punctuation">:</span>@<span class="token string">"abc"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
     <span class="token builtin">NSString</span> <span class="token operator">*</span>str1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">NSString</span> stringWithFormat<span class="token punctuation">:</span>@<span class="token string">"abcdefghijklmno"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token builtin">NSString</span> <span class="token operator">*</span>str2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">NSString</span> stringWithFormat<span class="token punctuation">:</span>@<span class="token string">"abc"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -447,7 +447,7 @@
 str1<span class="token punctuation">:</span>__NSCFString
 str2<span class="token punctuation">:</span><span class="token builtin">NSTaggedPointerString</span>
 str1<span class="token punctuation">:</span><span class="token number">0x281aac090</span> <span class="token comment" spellcheck="true">//明显不够64位</span>
-str2<span class="token punctuation">:</span><span class="token number">0xbabe312ffd3f4e86</span> <span class="token comment" spellcheck="true">//这里是babe 312f fd3f 4e86共64位，且最高有效位是1</span></code></pre>
+str2<span class="token punctuation">:</span><span class="token number">0xbabe312ffd3f4e86</span> <span class="token comment" spellcheck="true">//这里是babe 312f fd3f 4e86共64位，且最高有效位是1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -889,7 +889,7 @@ str2<span class="token punctuation">:</span><span class="token number">0xbabe312
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/01/2020-tableview01/">
+                <a href="/2020/01/01/2020-tableview/">
                     <div class="card-image">
                         
                         <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyjyt969gj30hs0buwga.jpg" class="responsive-img" alt="简化TableViewCell">

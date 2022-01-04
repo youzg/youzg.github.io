@@ -417,12 +417,12 @@
 </li>
 </ul>
 <p>代码</p>
-<pre class=" language-swift"><code class="language-swift">int a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-swift"><code class="language-swift">int a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 int b<span class="token punctuation">;</span>
 
-int <span class="token function">main</span><span class="token punctuation">(</span>int argc<span class="token punctuation">,</span> char <span class="token operator">*</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+int <span class="token function">main</span><span class="token punctuation">(</span>int argc<span class="token punctuation">,</span> char <span class="token operator">*</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token builtin">NSString</span> <span class="token operator">*</span> appDelegateClassName<span class="token punctuation">;</span>
-    @autoreleasepool <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    @autoreleasepool <span class="token punctuation">{</span>
         appDelegateClassName <span class="token operator">=</span> <span class="token function">NSStringFromClass</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token builtin">AppDelegate</span> <span class="token keyword">class</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
         <span class="token keyword">static</span> int c <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
@@ -432,9 +432,9 @@ int <span class="token function">main</span><span class="token punctuation">(</s
         <span class="token builtin">NSString</span> <span class="token operator">*</span>g <span class="token operator">=</span> @<span class="token string">"123"</span><span class="token punctuation">;</span>
         <span class="token builtin">NSObject</span> <span class="token operator">*</span>h <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token builtin">NSObject</span> alloc<span class="token punctuation">]</span> <span class="token keyword">init</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
         <span class="token function">NSLog</span><span class="token punctuation">(</span>@<span class="token string">"\n&amp;a=%p\n&amp;b=%p\n&amp;c=%p\n&amp;d=%p\n&amp;e=%p\n&amp;f=%p\n&amp;g=%p\n&amp;h=%p\n"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>a<span class="token punctuation">,</span> <span class="token operator">&amp;</span>b<span class="token punctuation">,</span> <span class="token operator">&amp;</span>c<span class="token punctuation">,</span> <span class="token operator">&amp;</span>d<span class="token punctuation">,</span> <span class="token operator">&amp;</span>e<span class="token punctuation">,</span> <span class="token operator">&amp;</span>f<span class="token punctuation">,</span> g<span class="token punctuation">,</span> h<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
     <span class="token keyword">return</span> <span class="token function">UIApplicationMain</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token constant">nil</span><span class="token punctuation">,</span> appDelegateClassName<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
 <span class="token comment" spellcheck="true">/// 输出</span>
 <span class="token operator">&amp;</span>a<span class="token operator">=</span><span class="token number">0x100151578</span>
@@ -444,7 +444,7 @@ int <span class="token function">main</span><span class="token punctuation">(</s
 <span class="token operator">&amp;</span>e<span class="token operator">=</span><span class="token number">0x16fcbb874</span>
 <span class="token operator">&amp;</span>f<span class="token operator">=</span><span class="token number">0x16fcbb870</span>
 <span class="token operator">&amp;</span>g<span class="token operator">=</span><span class="token number">0x10014c028</span>
-<span class="token operator">&amp;</span>h<span class="token operator">=</span><span class="token number">0x2814a4150</span></code></pre>
+<span class="token operator">&amp;</span>h<span class="token operator">=</span><span class="token number">0x2814a4150</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
