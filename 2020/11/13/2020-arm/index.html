@@ -288,7 +288,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://tva1.sinaimg.cn/large/0081Kckwgy1gknm3lu1yhj30zk0jedgz.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -464,17 +464,18 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>最近苹果Mac发布会发布了自研ARM架构的桌面处理器M1，目的在与打通移动端和PC使其直接兼容。</p>
+                <p><img src="0081Kckwgy1gknm3lu1yhj30zk0jedgz.jpg" alt=""></p>
+<p>最近苹果Mac发布会发布了自研ARM架构的桌面处理器M1，目的在与打通移动端和PC使其直接兼容。</p>
 <h3 id="ARM架构"><a href="#ARM架构" class="headerlink" title="ARM架构"></a>ARM架构</h3><p>进阶精简指令集机器(Advanced RISC Machine)，是32位精简指令集(RISC)处理器架构，广泛地使用在许多嵌入式系统设计<br>优点：适合移动通讯领域，低功耗<br>目前ARM家族占据了32位嵌入式处理器75%的比例</p>
 <h3 id="ARM处理器指令集"><a href="#ARM处理器指令集" class="headerlink" title="ARM处理器指令集"></a>ARM处理器指令集</h3><p>ARM指令集是指计算机ARM操作指令系统。在ARM中有两种方式可以实现程序的跳转：一种是跳转指令；另一种是直接向PC寄存器（R15）中写入目标地址值</p>
 <p>ARMV6、ARMV7、ARMV7s、ARM64、ARM64E都是</p>
 <h3 id="ARM架构图"><a href="#ARM架构图" class="headerlink" title="ARM架构图"></a>ARM架构图</h3><p>下图所示的是ARM构架图。它由32位ALU、若干个32位通用寄存器以及状态寄存器、32&TImes;8位乘法器、32&TImes;32位桶形移位寄存器、指令译码以及控制逻辑、指令流水线和数据/地址寄存器组成。<br>　　1、ALU：它有两个操作数锁存器、加法器、逻辑功能、结果以及零检测逻辑构成。<br>　　2、桶形移位寄存器：ARM采用了32&TImes;32位的桶形移位寄存器，这样可以使在左移/右移n位、环移n位和算术右移n位等都可以一次完成。<br>　　3、高速乘法器：乘法器一般采用“加一移位”的方法来实现乘法。ARM为了提高运算速度，则采用两位乘法的方法，根据乘数的2位来实现“加一移位”运算;ARM高速乘法器采用32&TImes;8位的结构，这样，可以降低集成度（其相应芯片面积不到并行乘法器的1/3）。<br>　　4、浮点部件：浮点部件是作为选件供ARM构架使用。FPA10浮点加速器是作为协处理方式与ARM相连，并通过协处理指令的解释来执行。<br>　　5、控制器：ARM的控制器采用的是硬接线的可编程逻辑阵列PLA。<br>　　6、寄存器</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gknisbp4qqj30et0fkt98.jpg" alt=""></p>
+<p><img src="0081Kckwgy1gknisbp4qqj30et0fkt98.jpg" alt=""></p>
 <h3 id="x86架构"><a href="#x86架构" class="headerlink" title="x86架构"></a>x86架构</h3><p>目前的PC架构绝大多数都是Intel的X86架构，貌似也是因为INTEL的这个X86架构早就了目前INTEL如日中天的地位。X86架构（The X86 architecture）是微处理器执行的计算机语言指令集，指一个intel通用计算机系列的标准编号缩写，也标识一套通用的计算机指令集合。</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gknjk3btmej30g40ae3z7.jpg" alt=""></p>
+<p><img src="0081Kckwgy1gknjk3btmej30g40ae3z7.jpg" alt=""></p>
 <p>当然，这个架构图并不是所有的都是如此，根据不同的主板，平台，架构是略有差别的比如说，目前很多主板已经将北桥集成到CPU当中，将南桥集成为PCH，但大致的框架还是如此的。下面对这个架构图上的各个内容分别进行一些简介。<br>　　1：CPU，大家都不陌生的名词，中央处理器，计算机的核心大脑。<br>　　2： 北桥（North Bridge Chipset）：北桥是电脑主板上的一块芯片，位于CPU插座边，起连接作用。<br>　　3：南桥芯片（South Bridge）是主板芯片组的重要组成部分，一般位于主板上离CPU插槽较远的下方，PCI插槽的附近，这种布局是考虑到它所连接的I/O总线较多，离处理器远一点有利于布线。<br>　　4： 内存是计算机中重要的部件之一，它是与CPU进行沟通的桥梁。计算机中所有程序的运行都是在内存中进行的，因此内存的性能对计算机的影响非常大。<br>　　5：显卡（Video card，Graphics card）全称显示接口卡，又称显示适配器，是计算机最基本配置、最重要的配件之一。<br>　　6：显示j接口<br>　　7：网卡是工作在链路层的网络组件，是局域网中连接计算机和传输介质的接口，不仅能实现与局域网传输介质之间的物理连接和电信号匹配，还涉及帧的发送与接收、帧的封装与拆封、介质访问控制、数据的编码与解码以及数据缓存的功能等。<br>　　8：声卡的基本功能是把来自话筒、磁带、光盘的原始声音信号加以转换，输出到耳机、扬声器、扩音机、录音机等声响设备，或通过音乐设备数字接口（MIDI）使乐器发出美妙的声音。<br>　　9：SATA（Serial Advanced Technology Attachment，串行高级技术附件）是一种基于行业标准的串行硬件驱动器接口，是由Intel、IBM、Dell、APT、Maxtor和Seagate公司共同提出的硬盘接口规范。<br>　　10：硬盘是电脑主要的存储媒介之一，由一个或者多个铝制或者玻璃制的碟片组成。碟片外覆盖有铁磁性材料。<br>　　11：总线</p>
 <h3 id="RISC-V"><a href="#RISC-V" class="headerlink" title="RISC-V"></a>RISC-V</h3><p>基于<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=精简指令集&action=edit&redlink=1">精简指令集</a>（RISC）原则的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/开源标准">开源</a><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/指令集架構">指令集架构</a>（ISA），且开源免费。RISC-V指令集的设计考虑了小型、快速、低功耗</p>
-<p><img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gknlm3z563j30n40jbdho.jpg" alt=""></p>
+<p><img src="0081Kckwgy1gknlm3z563j30n40jbdho.jpg" alt=""></p>
 <h3 id="ARM、x86架构、RISC-V"><a href="#ARM、x86架构、RISC-V" class="headerlink" title="ARM、x86架构、RISC-V"></a>ARM、x86架构、RISC-V</h3><p>ARM在2011年底发布ARMV8为首款64位处理器，18年底开始Windows已开始支持64位ARM应用开发和提交，所以x86 比 ARM 功耗高如今已经不再成立,如Atom。同时RISC-V的出现(CISC强调运算性能，专注桌面电脑、服务器和超算市场。RISC的代表为ARM，而CISC的代表则是我们耳熟能详的x86，而RISC-V是RISC的升级版)，由于没有历史包袱可以规避很多计算机体系结构中存在的漏洞，免费开源。并且，随着RISC-V开源架构吸引IBM、恩智浦、Western Digital、NVIDIA、Qualcomm、三星、Google、华为、Rambus、美高森美、Marvell、联发科、SK hynix、Seagate、CEVA、阿里巴巴、Allwinner、猎户星空，以及加州大学伯克利分校、麻省理工学院、普林斯顿大学、苏黎世联邦理工学院、印度理工学院、罗伦兹国家实验室、新加坡南洋理工大学及中国中科院计算所等学术机构，现阶段已经可以执行64位运算模式，并且在运算效能、功耗等方面均有一定优势，部分硬件设计也使用该架构，软件也陆续加入JVM、LLVM、Python等常见开发工具。</p>
 <h5 id="来源："><a href="#来源：" class="headerlink" title="来源："></a>来源：</h5><p><a target="_blank" rel="noopener" href="https://www.myoschain.com/blog/138175366417088512">ARM vs x86 vs RISC-V，未来属于谁？</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/95028674">一文看懂arm架构和x86架构有什么区别</a></p>
@@ -870,7 +871,8 @@
                 <a href="/2020/11/19/2020-algorithms01/">
                     <div class="card-image">
                         
-                        <img src="https://tva1.sinaimg.cn/large/0081Kckwgy1gkus10w9trj30zk0bu7ad.jpg" class="responsive-img" alt="数据结构和算法[1]">
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="数据结构和算法[1]">
                         
                         <span class="card-title">数据结构和算法[1]</span>
                     </div>
@@ -922,7 +924,8 @@
                 <a href="/2020/08/20/2020-regex-list/">
                     <div class="card-image">
                         
-                        <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghyjyt969gj30hs0buwga.jpg" class="responsive-img" alt="正则表达式速查表">
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="正则表达式速查表">
                         
                         <span class="card-title">正则表达式速查表</span>
                     </div>
@@ -1089,7 +1092,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2022</span>
+                <span id="year">2019-2023</span>
             
             <a href="/about" target="_blank">youzg</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
