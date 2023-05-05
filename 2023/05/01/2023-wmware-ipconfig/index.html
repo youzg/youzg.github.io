@@ -476,7 +476,7 @@
 <p>再查看dhcpd.conf文件，<code>cat dhcpd.conf</code>. range部分代表虚拟机可允许选择的静态ip地址范围，如图所示范围是<code>192.168.140.128~192.168.140.254</code></p>
 <p><img src="1687FWfYXkMpOsB.png" alt=""></p>
 <p>获取本机DNS，系统设置 -&gt; 网络 -&gt; 详细信息 -&gt; DNS 此处也能有多个DNS</p>
-<p><img src="m3bnxeGOqZ98j6Y.png" alt=""></p>
+<p><img src="https://s2.loli.net/2023/05/03/m3bnxeGOqZ98j6Y.png" alt=""></p>
 <h4 id="虚拟机系统部分配置"><a href="#虚拟机系统部分配置" class="headerlink" title="虚拟机系统部分配置"></a>虚拟机系统部分配置</h4><p>登录虚拟机系统，在<code>/etc/sysconfig/network-scripts</code>目录下打开ifcfg-en开头的文件，此文件需要用root权限，所以提前切换到root管理员。我的此处文件名为<code>ifcfg-ens33</code>.修改内容主要如下：</p>
 <pre><code>BOOTPROTO=static
 ONBOOT=yes
