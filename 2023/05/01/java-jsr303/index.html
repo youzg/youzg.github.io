@@ -4,8 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis入门基础笔记, youzg">
-    <meta name="description" content="Redis基础操作笔记">
+    <meta name="keywords" content="JSR-303统一校验, youzg">
+    <meta name="description" content="统一校验需求前端请求后端接口传输参数，在controller和Service中都需要校验，只是分工不同。
+
+Contoller中校验请求参数的合法性，包括：必填项校验，数据格式校验，比如：是否是符合一定的日期格式，等。
+
+Service中校">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +23,7 @@
 
     
 
-    <title>Redis入门基础笔记 | youzg</title>
+    <title>JSR-303统一校验 | youzg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -288,12 +292,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis入门基础笔记</h1>
+                    <h1 class="description center-align post-title">JSR-303统一校验</h1>
                 </div>
             </div>
         </div>
@@ -409,12 +413,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Redis%E5%9F%BA%E7%A1%80/">
-                                <span class="chip bg-color">Redis基础</span>
-                            </a>
-                        
                             <a href="/tags/Java/">
                                 <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                            <a href="/tags/JSR-303/">
+                                <span class="chip bg-color">JSR-303</span>
                             </a>
                         
                     </div>
@@ -455,415 +459,164 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h3><p>Redis（Remote Dictionary Server )，即远程字典服务，是一个开源的使用ANSI <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/C语言?fromModule=lemma_inlink">C语言</a>编写、支持网络、可基于内存亦可持久化的日志型、Key-Value<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/数据库/103728?fromModule=lemma_inlink">数据库</a>，并提供多种语言的API。可以用作：</p>
+                <h3 id="统一校验需求"><a href="#统一校验需求" class="headerlink" title="统一校验需求"></a>统一校验需求</h3><p>前端请求后端接口传输参数，在<code>controller</code>和<code>Service</code>中都需要校验，只是分工不同。</p>
 <ul>
-<li>数据库</li>
-<li>缓存</li>
-<li>消息中间件</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://redis.io">官网：https://redis.io</a></p>
-<p>redis官方提供的数据是可以达到100000+的QPS（每秒内查询次数）。它存储的value类型比较丰富，也被称为结构化的NoSql数据库。 </p>
-<ul>
-<li><p>关系型数据库：mysql、sqlServer、Oracle，适用于需要事务支持的情况，基于sql的结构化查询存储，处理复杂的关系。</p>
+<li><p><code>Contoller</code>中校验请求参数的合法性，包括：必填项校验，数据格式校验，比如：是否是符合一定的日期格式，等。</p>
 </li>
-<li><p>非关系型数据库：MongoDB，Cassandra，Redis</p>
+<li><p><code>Service</code>中校验业务规则相关的内容，比如：课程已经审核通过所以提交失败。</p>
 </li>
 </ul>
-<p>  Redis应用场景</p>
 <blockquote>
-<p>缓存</p>
-<p>任务队列</p>
-<p>消息队列</p>
-<p>分布式锁</p>
+<p> <code>Service</code>中根据业务规则去校验不方便写成<em>通用代码</em>，<code>Controller</code>中则可以将校验的代码写成通用代码。</p>
 </blockquote>
-<h4 id="Redis下载与安装"><a href="#Redis下载与安装" class="headerlink" title="Redis下载与安装"></a>Redis下载与安装</h4><p>Redis安装包分为Linux和Windows版本</p>
-<ul>
-<li>Linux 版本：<a target="_blank" rel="noopener" href="https://download.redis.io/releases/">https://download.redis.io/releases/</a></li>
-</ul>
-<ul>
-<li>Windows 版本：<a target="_blank" rel="noopener" href="https://github.com/microsoftarchive/redis/releases">https://github.com/microsoftarchive/redis/releases</a></li>
-</ul>
-<h5 id="Linux安装Redis"><a href="#Linux安装Redis" class="headerlink" title="Linux安装Redis"></a>Linux安装Redis</h5><ol>
-<li><p>将Redis安装包上传到Linux</p>
-</li>
-<li><p>解压安装包(这里我安装到software文件夹)</p>
-<pre class="line-numbers language-shell"><code class="language-shell">cd /software
-tar -zxvf redis-xxx.tar.gz -C /software<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-</li>
-<li><p>安装redis的依赖环境gcc，这里可以使用yum安装</p>
-<pre class="line-numbers language-shell"><code class="language-shell">yum install gcc-c++<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-</ol>
-<ol start="4">
-<li><p>进入<code>/software/redis</code>，进行编译</p>
-<pre class="line-numbers language-shell"><code class="language-shell">cd /software/redis
-
-# 编译
-make<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>进入redis的src目录，进行安装</p>
-<pre class="line-numbers language-shell"><code class="language-shell"># 进入redis的src目录,此时路径为/software/redis/src
-cd /src
-# 安装
-make install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-</ol>
-<h5 id="Windows安装Redis"><a href="#Windows安装Redis" class="headerlink" title="Windows安装Redis"></a>Windows安装Redis</h5><ol>
-<li>下载对应的Windows版本：<a target="_blank" rel="noopener" href="https://github.com/microsoftarchive/redis/releases">https://github.com/microsoftarchive/redis/releases</a></li>
-<li>Windows版本为免安装版本，下载后可直接使用</li>
-</ol>
-<h4 id="Redis服务启动与停止"><a href="#Redis服务启动与停止" class="headerlink" title="Redis服务启动与停止"></a>Redis服务启动与停止</h4><p>以下主要基于虚拟机上Centos 7</p>
-<h5 id="启动与停止"><a href="#启动与停止" class="headerlink" title="启动与停止"></a>启动与停止</h5><p>在redis目录<code>/software/redis/</code>中，进入<code>/src</code>文件，执行<code>redis-server</code>启动redis服务，redis默认端口为<code>6379</code></p>
-<pre class="line-numbers language-shell"><code class="language-shell"># 进入到redis目录下的src文件下
-cd /software/redis/sec
-
-# 启动redis-server
-./redis-server<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="redis配置"><a href="#redis配置" class="headerlink" title="redis配置"></a>redis配置</h5><p>在<code>redis</code>根目录下，打开<code>redis.conf</code>文件</p>
-<pre class="line-numbers language-shell"><code class="language-shell"># 进入redis根目录
-cd /software/redis
-
-# 打开配置文件
-vim redis.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>修改<code>redis.conf</code>配置文件让<code>redis</code>在后台运行，将<code>daemonize</code>字段改成<code>daemonize yes</code>.然后使用修改后的配置文件启动redis</p>
-<pre class="line-numbers language-shell"><code class="language-shell"># 在redis根目录下/software/redis
-src/redis-server ./redis.conf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h5 id="添加redis启动密码"><a href="#添加redis启动密码" class="headerlink" title="添加redis启动密码"></a>添加redis启动密码</h5><p>打开<code>redis.conf</code>配置文件，找到注释的<code>requirepass</code>打开，并在后面添加<code>redis</code>密码。配置好后<code>kill -9 &lt;redis进程pid&gt;</code>，重新启动<code>redis</code>服务</p>
-<pre class="line-numbers language-shell"><code class="language-shell"># 杀死进程后重新启动
-src/redis-server ./redis.conf
-
-# 使用密码登录
-src/redis-cli -h root -p 6379 -a <password><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="远程连接Redis"><a href="#远程连接Redis" class="headerlink" title="远程连接Redis"></a>远程连接Redis</h5><p>修改<code>redis.conf</code>配置文件，注释掉<code>bind 127.0.0.1</code>。若服务器默认没有开启6379端口，先开启6379端口</p>
-<pre class="line-numbers language-shell"><code class="language-shell"># 打开6379端口
-firewall-cmd --zone=public --add-port=6379/tcp --permanent
-
-# 重启防火墙使其生效
-firewall-cmd --reload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>注：防火墙相关命令</p>
-<pre class="line-numbers language-shell"><code class="language-shell"># 查看防火墙状态
-systemctl status firewalld
-
-# 暂时关闭防火墙
-systemctl stop firewalld
-
-# 开启防火墙
-systemctl start firewalld
-
-# 开放指定端口
-firewall-cmd --zone=public --add-port=<端口号>/tcp --permanent
-
-# 开放后刷新使防火墙生效
-firewall-cmd --reload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>Redis存储的是<code>key-value</code>结构的数据，其中key是字符串类型，value有5种常见的数据类型</p>
-<table>
-<thead>
-<tr>
-<th>value常见类型：</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>字符串 String</td>
-<td>string普通字符串</td>
-</tr>
-<tr>
-<td>哈希 hash</td>
-<td>hash适合存储对象</td>
-</tr>
-<tr>
-<td>列表 list</td>
-<td>list按照插入顺序排序，可以存储重复元素</td>
-</tr>
-<tr>
-<td>集合 set</td>
-<td>set无序集合，没有重复元素</td>
-</tr>
-<tr>
-<td>有序集合 sorted set</td>
-<td>sorted set有序集合，没有重复元素</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.redis.net.cn/order/">更多命令可以参考Redis中文官网：https://www.redis.net.cn/order/</a></p>
-</blockquote>
-<h4 id="Redis常用命令"><a href="#Redis常用命令" class="headerlink" title="Redis常用命令"></a>Redis常用命令</h4><h5 id="字符串String操作命令"><a href="#字符串String操作命令" class="headerlink" title="字符串String操作命令"></a>字符串String操作命令</h5><table>
-<thead>
-<tr>
-<th>Redis中字符串类型常用命令：</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>SET key value</td>
-<td>设置指定key的值</td>
-</tr>
-<tr>
-<td>GET key</td>
-<td>获取指定key的值</td>
-</tr>
-<tr>
-<td>SETEX key seconds value</td>
-<td>设置指定key的值，并将key的值过期时间设置为seconds秒</td>
-</tr>
-<tr>
-<td>SETNX key value</td>
-<td>只有key不存在时设置key的值</td>
-</tr>
-</tbody></table>
-<h5 id="哈希hash操作命令"><a href="#哈希hash操作命令" class="headerlink" title="哈希hash操作命令"></a>哈希hash操作命令</h5><p><code>Redis Hash</code>是一个<code>String</code>类型的<code>Field</code>和<code>Value</code>的映射表，<code>Hash</code>特别适合用于存储对象</p>
-<table>
-<thead>
-<tr>
-<th>常用命令：</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>HSET key field value</td>
-<td>将哈希表key 中的字段field的值设为value</td>
-</tr>
-<tr>
-<td>HGET key field</td>
-<td>获取存储在哈希表中指定字段的值</td>
-</tr>
-<tr>
-<td>HDEL key field</td>
-<td>删除存储在哈希表中的指定字段</td>
-</tr>
-<tr>
-<td>HKEYS key</td>
-<td>获取哈希表中所有字段</td>
-</tr>
-<tr>
-<td>HVALS key</td>
-<td>获取哈希表中所有值</td>
-</tr>
-<tr>
-<td>HGETALL key</td>
-<td>获取在哈希表中指定key的所有字段和值</td>
-</tr>
-</tbody></table>
-<h5 id="列表list操作命令"><a href="#列表list操作命令" class="headerlink" title="列表list操作命令"></a>列表list操作命令</h5><p><code>Redis</code>列表是简单的字符串列表，按照插入顺序排序</p>
-<table>
-<thead>
-<tr>
-<th>常用命令：</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>LPUSH key value1 [value2]</td>
-<td>将一个或多个值插入到列表头部</td>
-</tr>
-<tr>
-<td>LRANGE key start stop</td>
-<td>获取列表指定范围内的元素</td>
-</tr>
-<tr>
-<td>RPOP key</td>
-<td>移除并获取列表最后一个元素</td>
-</tr>
-<tr>
-<td>LLEN key</td>
-<td>获取列表长度</td>
-</tr>
-<tr>
-<td>BRPOP key1 [key2] timeout</td>
-<td>移出并获取列表的最后一个元素 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</td>
-</tr>
-</tbody></table>
-<h5 id="集合set操作命令"><a href="#集合set操作命令" class="headerlink" title="集合set操作命令"></a>集合set操作命令</h5><p><code>Redis set</code>是<code>String</code>类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据</p>
-<table>
-<thead>
-<tr>
-<th>常用命令：</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>SADD key member1 [member2]</td>
-<td>向集合添加一个或多个成员</td>
-</tr>
-<tr>
-<td>SMEMBERS key</td>
-<td>返回集合中的所有成员</td>
-</tr>
-<tr>
-<td>SCARD key</td>
-<td>获取集合的成员数</td>
-</tr>
-<tr>
-<td>SINTER key1 [key2]</td>
-<td>返回给定所有集合的交集</td>
-</tr>
-<tr>
-<td>SUNION key1 [key2]</td>
-<td>返回所有给定集合的并集</td>
-</tr>
-<tr>
-<td>SDIFF key1 [key2]</td>
-<td>返回给定所有集合的差集</td>
-</tr>
-<tr>
-<td>SREM key member1 [member2]</td>
-<td>移除集合中一个或多个成员</td>
-</tr>
-</tbody></table>
-<h5 id="有序集合Sorted-Set操作命令"><a href="#有序集合Sorted-Set操作命令" class="headerlink" title="有序集合Sorted Set操作命令"></a>有序集合Sorted Set操作命令</h5><p><code>Redis Sorted Set</code>有序集合是<code>String</code>类型元素的集合，且不允许重复的成员。每个元素都会关联一个<code>double</code>类型的分数(<code>score</code>) 。<code>Redis</code>正是通过分数来为集合中的成员进行从小到大排序。有序集合的成员是唯一的，但分数却可以重复。</p>
-<table>
-<thead>
-<tr>
-<th>常用命令：</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ZADD key score1 member1 [score2 member2]</td>
-<td>向有序集合添加一个或多个成员，或者更新已存在成员的分数</td>
-</tr>
-<tr>
-<td>ZRANGE key start stop [WITHSCORES]</td>
-<td>通过索引区间返回有序集合中指定区间内的成员</td>
-</tr>
-<tr>
-<td>ZINCRBY key increment member</td>
-<td>有序集合中对指定成员的分数加上增量increment</td>
-</tr>
-<tr>
-<td>ZREM key member [member …]</td>
-<td>移除有序集合中的一个或多个成员</td>
-</tr>
-</tbody></table>
-<h5 id="通用命令"><a href="#通用命令" class="headerlink" title="通用命令"></a>通用命令</h5><table>
-<thead>
-<tr>
-<th>命令：</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>KEYs pattern</td>
-<td>查找所有符合给定模式(pattern)的key</td>
-</tr>
-<tr>
-<td>EXISTs key</td>
-<td>检查给定key是否存在</td>
-</tr>
-<tr>
-<td>TYPE key</td>
-<td>返回key所储存的值的类型</td>
-</tr>
-<tr>
-<td>TTL key</td>
-<td>返回给定key的剩余生存时间(TTL, time to live)，以秒为单位</td>
-</tr>
-<tr>
-<td>DEL key</td>
-<td>该命令用于在key存在是删除key</td>
-</tr>
-</tbody></table>
-<h3 id="在Java中操作Redis"><a href="#在Java中操作Redis" class="headerlink" title="在Java中操作Redis"></a>在Java中操作Redis</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><p>Redis的Java客户端很多，官方推荐的有三种：</p>
-<ul>
-<li>Jedis</li>
-<li>Lettuce</li>
-<li>Redisson</li>
-</ul>
-<p><code>Spring</code>对<code>Redis</code>客户端进行了整合，提供了<code>Spring Data Redis</code>，在<code>Spring Boot</code>项目中还提供了对应的Starter，即<code>spring-boot-starter-data-redis</code></p>
-<h4 id="Jedis"><a href="#Jedis" class="headerlink" title="Jedis"></a>Jedis</h4><p>Jedis的<code>maven</code>坐标</p>
-<pre class="line-numbers language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- https://mvnrepository.com/artifact/redis.clients/jedis --></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>redis.clients<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jedis<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>4.4.0-rc1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>使用Jedis操作Redis的步骤：</p>
-<ol>
-<li>获取连接</li>
-<li>执行操作</li>
-<li>关闭连接</li>
-</ol>
-<p>测试代码</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">JedisTest</span> <span class="token punctuation">{</span>
-
-    <span class="token annotation punctuation">@Test</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testRedis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//1. 获取连接</span>
-        Jedis jedis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Jedis</span><span class="token punctuation">(</span><span class="token string">"localhost"</span><span class="token punctuation">,</span> <span class="token number">6379</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">//2. 执行具体操作</span>
-        jedis<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">,</span> <span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        String value <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        jedis<span class="token punctuation">.</span><span class="token function">hset</span><span class="token punctuation">(</span><span class="token string">"myhash"</span><span class="token punctuation">,</span> <span class="token string">"addr"</span><span class="token punctuation">,</span> <span class="token string">"shanghai"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        String hValue <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">hget</span><span class="token punctuation">(</span><span class="token string">"myhash"</span><span class="token punctuation">,</span> <span class="token string">"addr"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>hValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        Set<span class="token operator">&lt;</span>String<span class="token operator">></span> keys <span class="token operator">=</span> jedis<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span><span class="token string">"*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span>String key <span class="token operator">:</span> keys<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token comment" spellcheck="true">//3. 关闭连接</span>
-        jedis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="Spring-Data-Redis"><a href="#Spring-Data-Redis" class="headerlink" title="Spring Data Redis"></a>Spring Data Redis</h4><p><code>Spring Data Redis</code>中提供了一个高度封装的类：RedisTemplate，针对jedis客户端中大量api进行了归类封装，将同一类型操作封装为operation接口，具体分类如下：</p>
-<ul>
-<li><code>ValueOperations</code>：简单K-V操作</li>
-<li><code>SetOperations</code>：set类型数据操作</li>
-<li><code>ZSetOperations</code>：zset类型数据操作</li>
-<li><code>HashOperations</code>：针对map类型的数据操作</li>
-<li><code>ListOperations</code>：针对list类型的数据操作</li>
-</ul>
-<h5 id="在项目中使用"><a href="#在项目中使用" class="headerlink" title="在项目中使用"></a>在项目中使用</h5><ol>
-<li>在<code>maven</code>中导入<code>spring-boot-starter-data-redis</code></li>
-</ol>
-<pre class="line-numbers language-xml"><code class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis --></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+<p>早在JavaEE6规范中就定义了参数校验的规范，它就是JSR-303，它定义了<code>Bean Validation</code>，即对bean属性进行校验。</p>
+<p><code>SpringBoot</code>提供了<code>JSR-303</code>的支持，它就是<code>spring-boot-starter-validation</code>，它的底层使用<code>Hibernate Validator</code>，<code>Hibernate Validator</code>是<code>Bean Validation</code> 的参考实现。</p>
+<h3 id="统一校验实现"><a href="#统一校验实现" class="headerlink" title="统一校验实现"></a>统一校验实现</h3><p>添加<code>spring-boot-starter-validation</code>的依赖</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-data-redis<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.0.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ol start="2">
-<li><p>在<code>application.yml</code>中配置redis相关信息</p>
-<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
-    <span class="token key atrule">redis</span><span class="token punctuation">:</span>
-        <span class="token key atrule">host</span><span class="token punctuation">:</span> localhost
-        <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">6379</span>
-        <span class="token key atrule">password</span><span class="token punctuation">:</span> root
-        <span class="token key atrule">database</span><span class="token punctuation">:</span> <span class="token number">0</span>
-        <span class="token key atrule">jedis</span><span class="token punctuation">:</span>
-            <span class="token comment" spellcheck="true">#Redis连接池配置</span>
-            <span class="token key atrule">pool</span><span class="token punctuation">:</span>
-                <span class="token key atrule">max-active</span><span class="token punctuation">:</span> <span class="token number">8 </span><span class="token comment" spellcheck="true">#最大连接数</span>
-                <span class="token key atrule">max-wait</span><span class="token punctuation">:</span> 1ms <span class="token comment" spellcheck="true">#连接池最大阻塞等待时长</span>
-                <span class="token key atrule">max-idle</span><span class="token punctuation">:</span> <span class="token number">4 </span><span class="token comment" spellcheck="true">#连接池最大空闲连接</span>
-                <span class="token key atrule">min-idle</span><span class="token punctuation">:</span> <span class="token number">0 </span><span class="token comment" spellcheck="true">#连接池最小空闲连接</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>创建Redis配置类，重新设置序列表器，避免乱码</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RedisConfig</span> <span class="token keyword">extends</span> <span class="token class-name">CachingConfigurerSupport</span> <span class="token punctuation">{</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-validation<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>javax.validation.constraints</code>文件注解如图</p>
+<img src="https://s2.loli.net/2023/05/19/pAUvgsnNCtQifRJ.png" style="zoom:50%;" />
 
-    <span class="token annotation punctuation">@Bean</span>
-    <span class="token keyword">public</span> RedisTemplate<span class="token operator">&lt;</span>Object<span class="token punctuation">,</span> Object<span class="token operator">></span> <span class="token function">redisTemplate</span><span class="token punctuation">(</span>RedisConnectionFactory connectionFactory<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<p>如下图所示，直接在类里定义属性的时候添加注解</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
 
-        RedisTemplate<span class="token operator">&lt;</span>Object<span class="token punctuation">,</span> Object<span class="token operator">></span> redisTemplate <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RedisTemplate</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String userId<span class="token punctuation">;</span>
 
-        <span class="token comment" spellcheck="true">//默认的Key序列化器为：JdkSerializationRedisSerializer</span>
-        redisTemplate<span class="token punctuation">.</span><span class="token function">setKeySerializer</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">StringRedisSerializer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        redisTemplate<span class="token punctuation">.</span><span class="token function">setHashKeySerializer</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">StringRedisSerializer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//用户名不为空，使用默认提示</span>
+    <span class="token annotation punctuation">@NotNull</span>
+    <span class="token keyword">private</span> String username<span class="token punctuation">;</span>
 
-        redisTemplate<span class="token punctuation">.</span><span class="token function">setConnectionFactory</span><span class="token punctuation">(</span>connectionFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token annotation punctuation">@NotEmpty</span><span class="token punctuation">(</span>message <span class="token operator">=</span> <span class="token string">"地址不能为空"</span><span class="token punctuation">)</span>
+      <span class="token keyword">private</span> String address<span class="token punctuation">;</span>
 
-        <span class="token keyword">return</span> redisTemplate<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-</ol>
+    <span class="token comment" spellcheck="true">//密码进行长度和格式的验证</span>
+    <span class="token annotation punctuation">@Size</span><span class="token punctuation">(</span>min<span class="token operator">=</span><span class="token number">6</span><span class="token punctuation">,</span> max<span class="token operator">=</span><span class="token number">18</span><span class="token punctuation">,</span> message<span class="token operator">=</span><span class="token string">"密码长度必须在6 ~ 18字符之间"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Pattern</span><span class="token punctuation">(</span>regexp<span class="token operator">=</span><span class="token string">"^[a-zA-Z0-9|_]+$"</span><span class="token punctuation">,</span> message<span class="token operator">=</span><span class="token string">"密码必须由字母、数字、下划线组成"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> String password<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//手机号码自定义提示，使用正则表达式进行匹配</span>
+    <span class="token annotation punctuation">@Pattern</span><span class="token punctuation">(</span>regexp<span class="token operator">=</span><span class="token string">"^1(3|4|5|7|8|9)\\d{9}$"</span><span class="token punctuation">,</span>message<span class="token operator">=</span><span class="token string">"手机号码错误"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> String mobile<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@JsonFormat</span><span class="token punctuation">(</span>pattern <span class="token operator">=</span> <span class="token string">"yyyy-MM-dd"</span><span class="token punctuation">,</span> timezone <span class="token operator">=</span> <span class="token string">"GMT+8"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@DateTimeFormat</span><span class="token punctuation">(</span>pattern<span class="token operator">=</span><span class="token string">"yyyy-MM-dd"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> Date birthday<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>规则如下：<a target="_blank" rel="noopener" href="https://developer.ibm.com/languages/java/">更多详见文档</a></p>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>详细信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Null</td>
+<td>被注释的元素必须为 null</td>
+</tr>
+<tr>
+<td>@NotNull</td>
+<td>被注释的元素必须不为 null</td>
+</tr>
+<tr>
+<td>@AssertTrue</td>
+<td>被注释的元素必须为 true</td>
+</tr>
+<tr>
+<td>@AssertFalse</td>
+<td>被注释的元素必须为 false</td>
+</tr>
+<tr>
+<td>@Min(value)</td>
+<td>被注释的元素必须是一个数字，其值必须大于等于指定的最小值</td>
+</tr>
+<tr>
+<td>@Max(value)</td>
+<td>被注释的元素必须是一个数字，其值必须小于等于指定的最大值</td>
+</tr>
+<tr>
+<td>@DecimalMin(value)</td>
+<td>被注释的元素必须是一个数字，其值必须大于等于指定的最小值</td>
+</tr>
+<tr>
+<td>@DecimalMax(value)</td>
+<td>被注释的元素必须是一个数字，其值必须小于等于指定的最大值</td>
+</tr>
+<tr>
+<td>@Size(max, min)</td>
+<td>被注释的元素的大小必须在指定的范围内</td>
+</tr>
+<tr>
+<td>@Digits (integer, fraction)</td>
+<td>被注释的元素必须是一个数字，其值必须在可接受的范围内</td>
+</tr>
+<tr>
+<td>@Past</td>
+<td>被注释的元素必须是一个过去的日期</td>
+</tr>
+<tr>
+<td>@Future</td>
+<td>被注释的元素必须是一个将来的日期</td>
+</tr>
+<tr>
+<td>@Pattern(value)</td>
+<td>被注释的元素必须符合指定的正则表达式</td>
+</tr>
+<tr>
+<td>@Email</td>
+<td>被注释的元素必须是电子邮箱地址</td>
+</tr>
+<tr>
+<td>@Length</td>
+<td>被注释的字符串的大小必须在指定的范围内</td>
+</tr>
+<tr>
+<td>@NotEmpty</td>
+<td>被注释的字符串的必须非空</td>
+</tr>
+<tr>
+<td>@Range</td>
+<td>被注释的元素必须在合适的范围内</td>
+</tr>
+</tbody></table>
+<p>定义好规则后在<code>Controller</code>中使用还需要开启校验，在<code>Controller</code>方法中添加<code>@Validated</code>注解，如下</p>
+<pre class="line-numbers language-java"><code class="language-java">
+<span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/user"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> User <span class="token function">createUser</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> <span class="token annotation punctuation">@Validated</span> AddUserDto dto<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">return</span> userService<span class="token punctuation">.</span><span class="token function">createUser</span><span class="token punctuation">(</span>dto<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="分组校验"><a href="#分组校验" class="headerlink" title="分组校验"></a>分组校验</h3><p>有时同一属性可能有多个不同校验规则</p>
+<p>如：创建用户对象时，用户的id为空，而更新用户对象时，id不能为空。</p>
+<p>此时需要用到分组校验，同一个属性定义多个校验规则属于不同的分组</p>
+<p>比如：添加用户时使用@NULL规则属于insert分组，更新用户信息使用@NotEmpty规则属于update分组，insert和update是分组的名称</p>
+<p>可以创建一个类来定义不同分组。如下：</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ValidationGroups</span> <span class="token punctuation">{</span>
+
+ <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Inster</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Update</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Delete</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在定义校验规则时指定分组：</p>
+<pre class="line-numbers language-java"><code class="language-java">     <span class="token annotation punctuation">@NULL</span><span class="token punctuation">(</span>groups <span class="token operator">=</span> <span class="token punctuation">{</span>ValidationGroups<span class="token punctuation">.</span>Inster<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">,</span>message <span class="token operator">=</span> <span class="token string">"添加用户时id为空"</span><span class="token punctuation">)</span>
+     <span class="token annotation punctuation">@NotEmpty</span><span class="token punctuation">(</span>groups <span class="token operator">=</span> <span class="token punctuation">{</span>ValidationGroups<span class="token punctuation">.</span>Update<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">,</span>message <span class="token operator">=</span> <span class="token string">"更新用户信息时id不能为空"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> String userId<span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>在<code>Controller</code>方法中启动校验规则指定要使用的分组名</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@PostMapping</span><span class="token punctuation">(</span><span class="token string">"/user"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> User <span class="token function">createUser</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestBody</span> <span class="token annotation punctuation">@Validated</span><span class="token punctuation">(</span><span class="token punctuation">{</span>ValidationGroups<span class="token punctuation">.</span>Inster<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span> AddUserDto dto<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">return</span> userService<span class="token punctuation">.</span><span class="token function">createUser</span><span class="token punctuation">(</span>dto<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="校验规则不满足怎么办？"><a href="#校验规则不满足怎么办？" class="headerlink" title="校验规则不满足怎么办？"></a>校验规则不满足怎么办？</h3><p>若javax.validation.constraints包下的校验规则满足不了需求，则需要：</p>
+<ul>
+<li>手写校验代码</li>
+<li>自定义校验规则注解</li>
+</ul>
 
                 
             </div>
@@ -890,7 +643,7 @@ firewall-cmd --reload<span aria-hidden="true" class="line-numbers-rows"><span></
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://youzg.cc/2023/05/01/2023-redis-started/">http://youzg.cc/2023/05/01/2023-redis-started/</a>
+                    <a href="http://youzg.cc/2023/05/01/java-jsr303/">http://youzg.cc/2023/05/01/java-jsr303/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -928,12 +681,12 @@ firewall-cmd --reload<span aria-hidden="true" class="line-numbers-rows"><span></
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Redis%E5%9F%BA%E7%A1%80/">
-                                    <span class="chip bg-color">Redis基础</span>
-                                </a>
-                            
                                 <a href="/tags/Java/">
                                     <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                                <a href="/tags/JSR-303/">
+                                    <span class="chip bg-color">JSR-303</span>
                                 </a>
                             
                         </div>
@@ -1248,80 +1001,29 @@ firewall-cmd --reload<span aria-hidden="true" class="line-numbers-rows"><span></
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
-            <div class="card">
-                <a href="/2023/05/01/2023-redis-started/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Redis入门基础笔记">
-                        
-                        <span class="card-title">Redis入门基础笔记</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Redis基础操作笔记
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-01
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            youzg
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Redis%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">Redis基础</span>
-                    </a>
-                    
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/05/01/2023-wmware-ipconfig/">
+                <a href="/2023/05/01/java-tips01/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="VMware Fusion在mac上配置静态ip地址">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Java知识点笔记">
                         
-                        <span class="card-title">VMware Fusion在mac上配置静态ip地址</span>
+                        <span class="card-title">Java知识点笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            VMware Fusion在mac上配置静态ip地址
+                            Java学习过程中笔记
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-01
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-05-01
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1341,8 +1043,57 @@ firewall-cmd --reload<span aria-hidden="true" class="line-numbers-rows"><span></
                         <span class="chip bg-color">Java</span>
                     </a>
                     
-                    <a href="/tags/VMWare/">
-                        <span class="chip bg-color">VMWare</span>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/12/23/2021annualreport/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="2021年终总结">
+                        
+                        <span class="card-title">2021年终总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            纪念逝去的2021
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%9D%82%E8%B0%88/" class="post-category">
+                                    杂谈
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%80%BB%E7%BB%93/">
+                        <span class="chip bg-color">总结</span>
+                    </a>
+                    
+                    <a href="/tags/2021/">
+                        <span class="chip bg-color">2021</span>
                     </a>
                     
                 </div>
