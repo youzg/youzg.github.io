@@ -1,0 +1,1751 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Linux目录结构, youzg">
+    <meta name="description" content="Linux目录结构和常见命令">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+
+    <title>Linux目录结构 | youzg</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">youzg</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">youzg</div>
+        <div class="logo-desc">
+            
+            唯刀百辟 唯心不易
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/youzg" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/youzg" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Linux目录结构</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Linux/">
+                                <span class="chip bg-color">Linux</span>
+                            </a>
+                        
+                            <a href="/tags/Data/">
+                                <span class="chip bg-color">Data</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Linux/" class="post-category">
+                                Linux
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-05-01
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1n84y1i7td?p=1&vd_source=2bbf5ee18126636d8809d80faf194154"><strong>根据Java黑马B站Linux教程整理</strong></a></p>
+<h3 id="Linux的目录结构"><a href="#Linux的目录结构" class="headerlink" title="Linux的目录结构"></a>Linux的目录结构</h3><p>Linux的目录结构是一个树型结构</p>
+<p>Windows 系统可以拥有多个盘符, 如 C盘、D盘、E盘</p>
+<p>Linux没有盘符这个概念, 只有一个顶级目录 根目录 <code>/</code>, 所有文件都在它下面</p>
+<p><img src="https://s2.loli.net/2023/07/19/KfL39cPYie6ugNF.png" alt=""></p>
+<h5 id="Linux路径的描述方式"><a href="#Linux路径的描述方式" class="headerlink" title="Linux路径的描述方式"></a>Linux路径的描述方式</h5><p>路径之间的层级关系，使用：<code>/</code>来表示</p>
+<p><img src="https://s2.loli.net/2023/07/19/PE1LH9D6NXsGja4.png" alt=""></p>
+<p>上图路径描述为：<code>/usr/local/hello.txt</code></p>
+<ul>
+<li><p>出现在开头的<code>/</code>表示：根目录</p>
+</li>
+<li><p>出现在后面的<code>/</code>表示：层次关系</p>
+</li>
+</ul>
+<h3 id="Linux的命令入门"><a href="#Linux的命令入门" class="headerlink" title="Linux的命令入门"></a>Linux的命令入门</h3><h5 id="1-Linux命令的基础结构"><a href="#1-Linux命令的基础结构" class="headerlink" title="1.Linux命令的基础结构"></a>1.Linux命令的基础结构</h5><h6 id="命令行、命令"><a href="#命令行、命令" class="headerlink" title="命令行、命令"></a>命令行、命令</h6><ul>
+<li><p>命令行：即Linux终端（Terminal）,是一种命令提示符页面，以纯“字符”形式的操作系统，使用各种字符化命令对系统发出操作指令</p>
+</li>
+<li><p>命令：即Linux程序，一个命令就是一个Linux程序，命令没有图形化界面，可以在命令行（终端中）提供字符化的反馈</p>
+</li>
+</ul>
+<h6 id="基础格式"><a href="#基础格式" class="headerlink" title="基础格式"></a>基础格式</h6><p>无论是什么命令，用于什么用途，在Linux中，命令有其通用的格式：<code>command [-options] [parameter]</code></p>
+<ul>
+<li><p>command： 命令本身</p>
+</li>
+<li><p>-options：[可选，非必填] 命令的一些选项，可以通过选项控制命令的行为细节</p>
+</li>
+<li><p>parameter：[可选，非必填] 命令的参数，多数用于命令的指向目标等</p>
+</li>
+</ul>
+<blockquote>
+<p>语法中的[]，表示可选</p>
+</blockquote>
+<h5 id="2-工作目录的概念"><a href="#2-工作目录的概念" class="headerlink" title="2.工作目录的概念"></a>2.工作目录的概念</h5><p>Linux系统的命令行终端，在启动的时候，默认会加载:</p>
+<ul>
+<li><p>当前登录用户的HOME目录作为当前工作目录，所以ls命令列出的是HOME目录的内容</p>
+</li>
+<li><p>HOME目录：每个Linux操作用户在Linux系统的个人账户目录，路径在：/home/用户名</p>
+</li>
+</ul>
+<blockquote>
+<p>若Linux用户是user，其HOME目录是：<code>/home/user</code></p>
+</blockquote>
+<h5 id="3-ls命令的基础使用"><a href="#3-ls命令的基础使用" class="headerlink" title="3.ls命令的基础使用"></a>3.ls命令的基础使用</h5><p>ls命令的作用是列出目录下的内容，语法细节如下：<code>ls [-a -l -h] [linux路径]</code></p>
+<ul>
+<li><code>-a -l -h</code> 是<strong>可选</strong>的选项</li>
+<li>Linux路径是此命令<strong>可选</strong>的参数</li>
+</ul>
+<p>当不使用选项和参数，直接使用ls命令本体，表示：以平铺形式，列出当前工作目录下的内容</p>
+<img src="https://s2.loli.net/2023/07/19/1bB6ACmh38KyZsI.png" style="zoom:50%;" />
+
+<h6 id="ls命令"><a href="#ls命令" class="headerlink" title="ls命令 /"></a>ls命令 /</h6><p><code>ls /</code></p>
+<h6 id="ls命令的-a选项"><a href="#ls命令的-a选项" class="headerlink" title="ls命令的 -a选项"></a>ls命令的 -a选项</h6><p>看ls语法，ls命令是可以使用选项的<code>ls [-a -l -h] [linux路径]</code></p>
+<ul>
+<li>-a选项，表示：all的意思，即列出全部文件（包含隐藏的文件/文件夹）</li>
+</ul>
+<p><img src="https://s2.loli.net/2023/07/19/efvG2ZMB7qOTg4Y.png" alt=""></p>
+<p>可以看到，<code>ls -a</code> 对比<code>ls</code> 列出的内容更多了。</p>
+<ul>
+<li><p>图中以<code>.</code>开头的，表示是Linux系统的隐藏文件/文件夹（只要以.开头，就能自动隐藏）</p>
+</li>
+<li><p>只有通过<code>-a</code>选项，才能看到这些隐藏的文件/文件夹</p>
+</li>
+</ul>
+<h6 id="ls命令的-l选项"><a href="#ls命令的-l选项" class="headerlink" title="ls命令的 -l选项"></a>ls命令的 -l选项</h6><p><code>ls -l</code></p>
+<ul>
+<li>-l选项，表示：以列表（竖向排列）的形式展示内容，并展示更多信息(<code>-l</code>选项其实和图形化中，文件夹以列表形式排列类似)</li>
+</ul>
+<p><img src="https://s2.loli.net/2023/07/19/GcnqlpRkA7VXomv.png" alt=""></p>
+<h6 id="ls命令选项的组合使用"><a href="#ls命令选项的组合使用" class="headerlink" title="ls命令选项的组合使用"></a>ls命令选项的组合使用</h6><p>语法中的选项是可以组合使用的，比如学习的<code>-a</code>和<code>-l</code>可以组合应用。</p>
+<p>写法：</p>
+<blockquote>
+<p><code>ls -l -a</code></p>
+</blockquote>
+<blockquote>
+<p><code>ls -la</code></p>
+</blockquote>
+<blockquote>
+<p><code>ls -al</code></p>
+</blockquote>
+<p>上述三种写法，都是一样的，表示同时应用<code>-l</code>和<code>-a</code>的功能</p>
+<h6 id="ls命令的-h选项"><a href="#ls命令的-h选项" class="headerlink" title="ls命令的 -h选项"></a>ls命令的 -h选项</h6><p><code>ls [-a -l -h] [linux路径]</code></p>
+<ul>
+<li><p><code>-h</code>表示以易于阅读的形式，列出文件大小，如K、M、G</p>
+</li>
+<li><p><code>-h</code>选项必须要搭配 <code>-l</code> 一起使用</p>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2023/07/19/EtLO5eoUfFGXHSM.png" alt=""></p>
+<h3 id="目录切换相关命令-cd-pwd"><a href="#目录切换相关命令-cd-pwd" class="headerlink" title="目录切换相关命令(cd/pwd)"></a>目录切换相关命令(<code>cd/pwd</code>)</h3><h4 id="cd切换工作目录"><a href="#cd切换工作目录" class="headerlink" title="cd切换工作目录"></a>cd切换工作目录</h4><p>Linux终端（命令行）打开会默认以用户的HOME目录作为当前的工作目录,可以通过cd命令，更改当前所在的工作目录。</p>
+<p>cd命令来自英文：<code>Change Directory</code></p>
+<p>语法：<code>cd [Linux路径]</code></p>
+<ul>
+<li><p>cd命令无需选项，只有参数，表示要切换到哪个目录下</p>
+</li>
+<li><p>cd命令直接执行，不写参数，表示回到用户的HOME目录</p>
+</li>
+</ul>
+<h4 id="pwd展示当前工作目录"><a href="#pwd展示当前工作目录" class="headerlink" title="pwd展示当前工作目录"></a>pwd展示当前工作目录</h4><p>通过ls来验证当前的工作目录，其实是不恰当的。可以通过pwd命令，来查看当前所在的工作目录。</p>
+<p>pwd命令来自：<code>Print Work Directory</code></p>
+<p>语法：<code>pwd</code></p>
+<ul>
+<li>pwd命令，无选项，无参数，直接输入pwd即可</li>
+</ul>
+<h3 id="相对路径、绝对路径和特殊路径符"><a href="#相对路径、绝对路径和特殊路径符" class="headerlink" title="相对路径、绝对路径和特殊路径符"></a>相对路径、绝对路径和特殊路径符</h3><h4 id="相对路径和绝对路径"><a href="#相对路径和绝对路径" class="headerlink" title="相对路径和绝对路径"></a>相对路径和绝对路径</h4><p><img src="https://s2.loli.net/2023/07/22/TeUG9bvNLWCirfj.png" alt=""></p>
+<p>如图，通过<code>pwd</code>得知当前所在目录：/root</p>
+<p>通过cd命令，切换工作目录到<code>Desktop</code>文件夹中，可以有下面两种写法：</p>
+<ul>
+<li><p><code>cd /root/Desktop</code>           //绝对路径写法</p>
+</li>
+<li><p><code>cd Deskto</code>                //相对路径写法</p>
+<p>绝对路径：以<strong>根目录为起点</strong>，描述路径的一种写法，路径描述以/开头</p>
+<p>相对路径：以<strong>当前目录为起点</strong>，描述路径的一种写法，路径描述无需以/开头</p>
+</li>
+</ul>
+<h4 id="特殊路径符号"><a href="#特殊路径符号" class="headerlink" title="特殊路径符号"></a>特殊路径符号</h4><p><img src="https://s2.loli.net/2023/07/22/fn3zmKD1Tx5F6JC.png" alt=""></p>
+<p>如图，当前工作目录处于：/root/Downloads现在向上回退一级，切换目录到/root中，有两种方式</p>
+<ul>
+<li><p>可以直接通过cd，即可回到HOME目录</p>
+</li>
+<li><p>也可以通过特殊路径符来完成。</p>
+</li>
+</ul>
+<p>特殊路径符：</p>
+<ul>
+<li><p><code>.</code> 表示当前目录，比如 <code>cd ./Desktop</code> 表示切换到当前目录下的Desktop目录内，和cd Desktop效果一致</p>
+</li>
+<li><p><code>..</code> 表示上一级目录，比如：<code>cd ..</code>  即可切换到上一级目录，<code>cd ../..</code> 切换到上二级的目录</p>
+</li>
+<li><p><code>~</code> 表示root目录，比如：<code>cd ~</code>  即可切换到HOME目录或<code>cd ~/Desktop</code>，切换到root内的Desktop目录</p>
+</li>
+</ul>
+<h3 id="创建目录命令-mkdir"><a href="#创建目录命令-mkdir" class="headerlink" title="创建目录命令(mkdir)"></a>创建目录命令(mkdir)</h3><h4 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a><code>mkdir</code>命令</h4><p>通过mkdir命令可以创建新的目录（文件夹）</p>
+<p>mkdir来自英文：<code>Make Directory</code></p>
+<p>语法：<code>mkdir [-p] Linux路径</code></p>
+<ul>
+<li><p>参数必填，表示Linux路径，即要创建的文件夹的路径，相对路径或绝对路径均可</p>
+</li>
+<li><p><code>-p</code>选项可选，表示自动创建不存在的父目录，适用于创建连续多层级的目录</p>
+</li>
+</ul>
+<h4 id="mkdir-p选项"><a href="#mkdir-p选项" class="headerlink" title="mkdir -p选项"></a><code>mkdir -p</code>选项</h4><p>若一次性创建多个层级的目录，如下图</p>
+<p><img src="https://s2.loli.net/2023/07/22/MxqcsKfCGAFngym.png" alt=""></p>
+<p>会报错，因为上级目录user和project并不存在，所以无法创建linux目录</p>
+<p><img src="https://s2.loli.net/2023/07/22/QYioeLW9MJPTx6N.png" alt=""></p>
+<p>这里通过<code>-p</code>选项，将一整个链条都创建完成。</p>
+<blockquote>
+<p>注：创建文件夹需要修改权限，请确保操作均在HOME目录内，不要在HOME外操涉及到权限问题，HOME外无法成功</p>
+</blockquote>
+<h3 id="文件操作命令part1-touch、cat、more）"><a href="#文件操作命令part1-touch、cat、more）" class="headerlink" title="文件操作命令part1(touch、cat、more）"></a>文件操作命令part1(touch、cat、more）</h3><h4 id="touch创建文件"><a href="#touch创建文件" class="headerlink" title="touch创建文件"></a>touch创建文件</h4><p>通过touch命令创建文件</p>
+<p>语法：<code>touch Linux路径</code></p>
+<ul>
+<li>touch命令无选项，参数必填，表示要创建的文件路径，相对、绝对、特殊路径符均可以使用</li>
+</ul>
+<img src="https://s2.loli.net/2023/07/22/meVzIHWxcuPgDEM.png" style="zoom:50%;" />
+
+<h4 id="cat命令-查看文件内容"><a href="#cat命令-查看文件内容" class="headerlink" title="cat命令 查看文件内容"></a>cat命令 查看文件内容</h4><p>通过cat命令查看文件的内容</p>
+<p>语法：<code>cat Linux路径</code></p>
+<ul>
+<li>cat同样没有选项，只有必填参数，参数表示：被查看的文件路径，相对、绝对、特殊路径符都可以使用</li>
+</ul>
+<h4 id="more命令查看文件内容"><a href="#more命令查看文件内容" class="headerlink" title="more命令查看文件内容"></a>more命令查看文件内容</h4><p>more命令同样可以查看文件内容，同cat不同的是：</p>
+<ul>
+<li><p>cat是直接将内容全部显示出来</p>
+</li>
+<li><p>more支持翻页，如果文件内容过多，可以一页页的展示</p>
+</li>
+</ul>
+<p>语法：<code>more Linux路径</code></p>
+<ul>
+<li><p>同样没有选项，只有必填参数，参数表示：被查看的文件路径，相对、绝对、特殊路径符都可以使用</p>
+</li>
+<li><p>在查看的过程中，通过空格翻页</p>
+</li>
+<li><p>通过q退出查看</p>
+</li>
+</ul>
+<h3 id="文件操作命令part2-cp、mv、rm）"><a href="#文件操作命令part2-cp、mv、rm）" class="headerlink" title="文件操作命令part2(cp、mv、rm）"></a>文件操作命令part2(cp、mv、rm）</h3><h4 id="cp命令复制文件或文件夹"><a href="#cp命令复制文件或文件夹" class="headerlink" title="cp命令复制文件或文件夹"></a>cp命令复制文件或文件夹</h4><p>cp命令可以用于复制文件<code>\</code>文件夹，cp命令来自英文单词：<strong>copy</strong></p>
+<p>语法：cp [-r] 参数1 参数2</p>
+<ul>
+<li><p><code>-r</code>选项，可选，用于复制文件夹使用，表示递归</p>
+</li>
+<li><p>参数1，Linux路径，表示被复制的文件或文件夹</p>
+</li>
+<li><p>参数2，Linux路径，表示要复制去的地方</p>
+</li>
+</ul>
+<p>复制文件</p>
+<img src="https://s2.loli.net/2023/07/22/dBcfhZWesbjDaM7.png" style="zoom:50%;" />
+
+<p>复制文件夹</p>
+<img src="https://s2.loli.net/2023/07/22/dBcfhZWesbjDaM7.png" style="zoom:50%;" />
+
+<blockquote>
+<p>复制文件夹，必须使用<code>-r</code>选项，否则不会生效</p>
+</blockquote>
+<h4 id="mv移动文件或文件夹"><a href="#mv移动文件或文件夹" class="headerlink" title="mv移动文件或文件夹"></a>mv移动文件或文件夹</h4><p>mv命令可以用于移动文件\文件夹，mv命令来自英文单词：move</p>
+<p>语法：<code>mv 参数1 参数2</code></p>
+<ul>
+<li><p>参数1，Linux路径，表示被移动的文件或文件夹</p>
+</li>
+<li><p>参数2，Linux路径，表示要移动去的地方，<strong>如目标不存在，则进行改名</strong>，确保目标存在</p>
+</li>
+</ul>
+<h4 id="rm删除文件、文件夹"><a href="#rm删除文件、文件夹" class="headerlink" title="rm删除文件、文件夹"></a>rm删除文件、文件夹</h4><p>rm命令可用于删除文件、文件夹</p>
+<p>rm命令来自英文单词：remove</p>
+<p>语法：<code>rm [-r -f] 参数1 参数2 ......参数N</code></p>
+<ul>
+<li><p>同cp命令一样，<code>-r</code>选项用于删除文件夹</p>
+</li>
+<li><p><code>-f</code>表示force，强制删除（不会弹出提示确认信息）</p>
+<ul>
+<li>普通用户删除内容不会弹出提示，只有root管理员用户删除内容会有提示</li>
+<li>一般普通用户用不到-f选项</li>
+</ul>
+</li>
+<li><p>参数1、参数2、……、参数N 表示要删除的文件或文件夹路径，按照空格隔开</p>
+</li>
+</ul>
+<p>删除文件</p>
+<img src="https://s2.loli.net/2023/07/22/SJAWqDKnal9ZryF.png" style="zoom:50%;" />
+
+<p>删除多个文件</p>
+<img src="https://s2.loli.net/2023/07/22/Zw6yDFPTVtn5h1r.png" style="zoom:50%;" />
+
+<p>删除文件夹，必须使用<code>-r</code>选项才可以</p>
+<img src="https://s2.loli.net/2023/07/22/ErnILA42jFWdMgS.png" style="zoom:50%;" />
+
+<ul>
+<li>演示强制删除，-f选项</li>
+</ul>
+<blockquote>
+<p>可以通过 <code>su - root</code>切换用户，并输入密码临时切换到root用户体验</p>
+<p>通过输入exit命令，退回普通用户。（临时用root，用完记得退出）</p>
+</blockquote>
+<h4 id="rm删除文件、文件夹-通配符"><a href="#rm删除文件、文件夹-通配符" class="headerlink" title="rm删除文件、文件夹 -通配符"></a>rm删除文件、文件夹 -通配符</h4><p>rm命令支持通配符 <code>*</code>，用来做模糊匹配</p>
+<ul>
+<li><p>符号<code>*</code> 表示通配符，即匹配任意内容（包含空），示例：</p>
+</li>
+<li><p><code>test*</code>，表示匹配任何以test开头的内容</p>
+</li>
+<li><p><code>*test</code>，表示匹配任何以test结尾的内容</p>
+</li>
+<li><p><code>*test*</code>，表示匹配任何包含test的内容</p>
+</li>
+</ul>
+<blockquote>
+<p>rm是一个危险的命令，特别是在处于root（超级管理员）用户的时候。</p>
+<p>在root管理员用户下执行：</p>
+<p><code>rm -rf /</code></p>
+<p><code>rm -rf /*</code></p>
+<p>效果等同于在Windows上执行C盘格式化</p>
+</blockquote>
+<h3 id="查找命令-which、find）"><a href="#查找命令-which、find）" class="headerlink" title="查找命令(which、find）"></a>查找命令(which、find）</h3><h4 id="which命令"><a href="#which命令" class="headerlink" title="which命令"></a>which命令</h4><p>Linux命令的本体就是一个个的二进制可执行程序。类似Windows系统中的.exe文件</p>
+<p>可以通过which命令，查看所使用的一系列命令的程序文件存放的位置</p>
+<p>语法：<code>which 要查找的命令</code></p>
+<img src="https://s2.loli.net/2023/07/22/fvdKVj1ucybWNBs.png" style="zoom:50%;" />
+
+<h4 id="find命令-按文件名查找文件"><a href="#find命令-按文件名查找文件" class="headerlink" title="find命令 -按文件名查找文件"></a>find命令 -按文件名查找文件</h4><p>类似图形化界面中的搜索功能，在Linux系统中，我们可以通过<code>find</code>命令去搜索指定的文件。</p>
+<p>语法：<code>find 起始路径 -name &quot;被查找的文件名&quot;</code></p>
+<p>如：查找test文件，从根目录开始搜索。<code>find / -name &quot;test&quot;</code></p>
+<img src="https://s2.loli.net/2023/07/22/zaVKu3QBGW7EJgI.png" style="zoom:67%;" />
+
+<h4 id="find命令-通配符"><a href="#find命令-通配符" class="headerlink" title="find命令 -通配符"></a>find命令 -通配符</h4><p>根据语法：<code>find 起始路径 -name &quot;被查找的文件名&quot;</code></p>
+<p>被查找文件名，支持使用通配符 * 来做模糊查询。</p>
+<ul>
+<li><p><code>*</code> 表示通配符，即匹配任意内容（包含空），示例：</p>
+</li>
+<li><p><code>test*</code> 表示匹配任何以test开头的内容</p>
+</li>
+<li><p><code>*test</code> 表示匹配任何以test结尾的内容</p>
+</li>
+<li><p><code>*test*</code> 表示匹配任何包含test的内容</p>
+</li>
+</ul>
+<p>基于通配符的含义，可以结合find命令做文件的模糊查询。</p>
+<h4 id="find命令-按文件大小查找文件"><a href="#find命令-按文件大小查找文件" class="headerlink" title="find命令 - 按文件大小查找文件"></a>find命令 <strong>-</strong> 按文件大小查找文件</h4><p>语法：<code>find 起始路径 -size +|-n[kMG]</code></p>
+<ul>
+<li><p>+、- 表示大于和小于</p>
+</li>
+<li><p>n表示大小数字</p>
+</li>
+<li><p>kMG表示大小单位，k(小写字母)表示kb，M表示MB，G表示GB</p>
+</li>
+</ul>
+<p>示例：</p>
+<ul>
+<li><p>查找小于10KB的文件： find / -size -10k</p>
+</li>
+<li><p>查找大于100MB的文件：find / -size +100M</p>
+</li>
+<li><p>查找大于1GB的文件：find / -size +1G</p>
+</li>
+</ul>
+<h3 id="grep、wc和管道符"><a href="#grep、wc和管道符" class="headerlink" title="grep、wc和管道符"></a>grep、wc和管道符</h3><h4 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h4><p>通过grep命令，从文件中通过关键字过滤文件行。</p>
+<p>语法：<code>grep [-n] 关键字 文件路径</code></p>
+<ul>
+<li><p><strong>选项-n</strong>，可选，表示在结果中显示匹配的行的<strong>行号</strong>。</p>
+</li>
+<li><p><strong>关键字</strong>，必填，表示过滤的关键字，带有空格或其它特殊符号，建议使用””将关键字包围起来</p>
+</li>
+<li><p><strong>文件路径</strong>，必填，表示要过滤内容的文件路径，可作为<strong>内容输入端口</strong></p>
+</li>
+</ul>
+<h4 id="wc命令做数量统计"><a href="#wc命令做数量统计" class="headerlink" title="wc命令做数量统计"></a>wc命令做数量统计</h4><p>可以通过wc命令统计文件的行数、单词数量等</p>
+<p>语法：<code>wc [-c -m -l -w] 文件路径</code></p>
+<ul>
+<li><p>选项<code>-c</code>，统计bytes数量</p>
+</li>
+<li><p>选项<code>-m</code>，统计字符数量</p>
+</li>
+<li><p>选项<code>-l</code>，统计行数</p>
+</li>
+<li><p>选项<code>-w</code>，统计单词数量</p>
+</li>
+<li><p>参数<strong>文件路径</strong>，被统计的文件，<strong>可作为内容输入端口</strong></p>
+</li>
+</ul>
+<p>例如：</p>
+<p>不带选项，统计文件</p>
+<img src="https://s2.loli.net/2023/07/22/V23Ae1gbqPoSwGu.png" style="zoom:50%;" />
+
+<h4 id="管道符"><a href="#管道符" class="headerlink" title="管道符"></a>管道符</h4><p>管道符：<code>|</code>  管道符的含义是：将管道符左边命令的结果，作为右边命令的输入</p>
+<p>管道符的应用非常多</p>
+<ul>
+<li><p><code>ls | grep Desktop</code>，过滤ls的结果</p>
+<img src="https://s2.loli.net/2023/07/22/Jf4odDwNYgqu6la.png" style="zoom:50%;" />
+</li>
+<li><p><code>find / -name &quot;test&quot; | grep &quot;/usr/lib64&quot;</code>，过滤结果，只找路径带有<code>/usr/lib64</code></p>
+<p>的结果</p>
+<img src="https://s2.loli.net/2023/07/22/Jf4odDwNYgqu6la.png" style="zoom:50%;" />
+</li>
+<li><p><code>cat file.txt | grep file | grep project</code>，可以嵌套使用</p>
+<blockquote>
+<p>cat file.txt的结果给 grep file 使用</p>
+<p>cat file.txt | grep file 的结果给 grep project使用</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="echo、tail和重定向符"><a href="#echo、tail和重定向符" class="headerlink" title="echo、tail和重定向符"></a>echo、tail和重定向符</h3><h4 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h4><p>使用echo命令在命令行内输出指定内容</p>
+<p>语法：<code>echo 输出的内容</code></p>
+<ul>
+<li><p>无需选项，只有一个参数，表示要输出的内容，复杂内容可以用””包围</p>
+<blockquote>
+<p>带有空格或\等特殊符号，建议使用双引号包围，如果不包围的话，空格后很容易被识别为参数2</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="反应号"><a href="#反应号" class="headerlink" title="反应号`"></a>反应号`</h4><p>使用<code>echo pwd</code>输出当前的工作路径，但是pwd被作为普通字符输出。</p>
+<p>这里通过将命令用反引号（通常也称之为飘号）`将其包围</p>
+<p>被`包围的内容，会被作为命令执行，而非普通字符</p>
+<img src="https://s2.loli.net/2023/07/22/kzgGT45hl3wEUas.png" style="zoom:50%;" />
+
+<h4 id="重定向符"><a href="#重定向符" class="headerlink" title="重定向符"></a>重定向符</h4><p>重定向符：<code>&gt;</code>和<code>&gt;&gt;</code></p>
+<ul>
+<li><p><code>&gt;</code> 将左侧命令的结果，覆盖写入到符号右侧指定的文件中</p>
+</li>
+<li><p><code>&gt;&gt;</code> 将左侧命令的结果，追加写入到符号右侧指定的文件中</p>
+</li>
+</ul>
+<h4 id="tail命令"><a href="#tail命令" class="headerlink" title="tail命令"></a>tail命令</h4><p>tail命令，可以查看文件尾部内容，跟踪文件的最新更改</p>
+<p>语法：<code>tail [-f -num] Linux路径</code></p>
+<ul>
+<li><p>参数<code>Linux路径</code> 表示被跟踪的文件路径</p>
+</li>
+<li><p>选项<code>-f</code> 表示持续跟踪</p>
+</li>
+<li><p>选项<code>-num</code> 表示查看尾部多少行，不填默认10行</p>
+</li>
+</ul>
+<h3 id="vi编辑器"><a href="#vi编辑器" class="headerlink" title="vi编辑器"></a>vi编辑器</h3><p><code>vi\vim</code>是<code>visual interface</code>的简称, 是Linux中最经典的文本编辑器,同图形化界面中的 文本编辑器一样，vi是命令行下对文本文件进行编辑的绝佳选择。</p>
+<p>vim 是 vi 的加强版本，兼容 vi 的所有指令，不仅能编辑文本，而且还具有 shell 程序编辑的功能，可以不同颜色的字体来辨别语法的正确性，极大方便了程序的设计和编辑性。</p>
+<h4 id="vi-vim编辑器的三种工作模式"><a href="#vi-vim编辑器的三种工作模式" class="headerlink" title="vi\vim编辑器的三种工作模式"></a>vi\vim编辑器的三种工作模式</h4><ul>
+<li><p><strong>命令</strong>模式（Command mode）</p>
+<pre><code>   命令模式下，所敲的按键编辑器都理解为命令，以命令驱动执行不同的功能，此模型下，不能自由进行文本编辑。</code></pre></li>
+<li><p><strong>输入</strong>模式（Insert mode）</p>
+<pre><code>   也就是所谓的编辑模式、插入模式。此模式下，可以对文件内容进行自由编辑。</code></pre></li>
+<li><p><strong>底线命令</strong>模式（Last line mode）</p>
+<pre><code>   以：开始(`i`)，通常用于文件的保存、退出(`wq`)。</code></pre></li>
+</ul>
+<h5 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h5><p>如果需要通过vi/vim编辑器编辑文件，请通过如下命令：</p>
+<pre><code>vi 文件路径
+vim 文件路径</code></pre><p>vim兼容全部的vi功能，后续全部使用vim命令</p>
+<ul>
+<li><p>若文件路径表示的<strong>文件不存在</strong>，那么此命令会用于<strong>编辑新文件</strong></p>
+</li>
+<li><p>若文件路径表示的<strong>文件存在</strong>，那么此命令用于<strong>编辑已有文件</strong> </p>
+</li>
+</ul>
+<h5 id="vi编辑器的快速体验"><a href="#vi编辑器的快速体验" class="headerlink" title="vi编辑器的快速体验"></a>vi编辑器的快速体验</h5><p>通过<code>vi/vim</code>命令编辑文件，会打开一个新的窗口，此时这个窗口就是：命令模式窗口</p>
+<p>命令模式是vi编辑器的入口和出口，如下图</p>
+<ul>
+<li><p>进入vi编辑器会进入命令模式</p>
+</li>
+<li><p>通过命令模式输入键盘指令，可以进入输入模式</p>
+</li>
+<li><p>输入模式需要退回到命令模式，然后通过命令可以进入底线命令模式</p>
+</li>
+</ul>
+<img src="https://s2.loli.net/2023/07/22/TAS7lWvNDO6Bjxu.png" style="zoom:50%;" />
+
+<p>快速体验</p>
+<ol>
+<li><p>使用：<code>vim hello.txt</code>，编辑一个新文件，执行后进入的是命令模式</p>
+</li>
+<li><p>在命令模式内，按键盘 i ，进入输入模式</p>
+</li>
+<li><p>在输入模式内输入：<code>hello world</code>.</p>
+</li>
+<li><p>输入完成后，按esc回退会命令模式</p>
+</li>
+<li><p>在命令模式内，按键盘 : ，进入底线命令模式</p>
+</li>
+</ol>
+<p>在底线命令内输入：wq，保存文件并退出vi编辑器</p>
+<h5 id="命令模式快捷键"><a href="#命令模式快捷键" class="headerlink" title="命令模式快捷键"></a>命令模式快捷键</h5><p><img src="https://s2.loli.net/2023/07/22/tjmTrBAORXiNUHS.png" alt=""></p>
+<p><img src="https://s2.loli.net/2023/07/22/cDpLqhNsl2dOy8z.png" alt=""></p>
+<p><img src="https://s2.loli.net/2023/07/22/aOfq5HpFiB97NZD.png" alt=""></p>
+<h5 id="底线命令模式"><a href="#底线命令模式" class="headerlink" title="底线命令模式"></a>底线命令模式</h5><p>通过esc，可以退回到命令模式，在命令模式内，输入<code>:</code>即可进入底线命令模式，支持如下命令：</p>
+<p><img src="https://s2.loli.net/2023/07/22/ZvrEV467mDwfcBP.png" alt=""></p>
+<h5 id="命令的选项"><a href="#命令的选项" class="headerlink" title="命令的选项"></a>命令的选项</h5><p>Linux命令，它们所拥有的选项都是非常多的。比如，简单的ls命令就有：</p>
+<p><code>-a -A -b -c -C -d -D -f -F -g -G -h -H -i -I -k -l -L -m -n -N -o -p -q -Q -r-R -s -S -t -T -u -U -v -w -x -X -1</code>等选项，可以发现选项是极其多的。</p>
+<h5 id="查看命令帮助和手册"><a href="#查看命令帮助和手册" class="headerlink" title="查看命令帮助和手册"></a>查看命令帮助和手册</h5><p>如果想要对命令的其它选项进行查阅，可以通过如下方式：</p>
+<ul>
+<li>任何命令都支持：<code>--help</code> 选项， 可以通过这个选项，查看命令的帮助。</li>
+</ul>
+<p>如：<code>ls --help</code> 会列出ls命令的帮助文档，帮助文档会简单的对命令使用方式进行说明</p>
+<img src="https://s2.loli.net/2023/07/22/4x2yaHDfCUqeT9A.png" style="zoom:67%;" />
+
+
+
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">youzg</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://youzg.cc/2023/05/01/2023-linux-directory/">http://youzg.cc/2023/05/01/2023-linux-directory/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">youzg</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
+                                </a>
+                            
+                                <a href="/tags/Data/">
+                                    <span class="chip bg-color">Data</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'O8IFbSmCLk11Xhycd9D2n6Mq-gzGzoHsz',
+        appKey: 'HM5XgUwyJMYW792ic8NoTJP1',
+        serverURLs: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+<!--酷Q推送-->
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/05/01/java-jsr303/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="JSR-303统一校验">
+                        
+                        <span class="card-title">JSR-303统一校验</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            JSR-303使用笔记
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-05-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java/" class="post-category">
+                                    Java
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/JSR-303/">
+                        <span class="chip bg-color">JSR-303</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/05/01/2023-linux-initialization/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Linux初识">
+                        
+                        <span class="card-title">Linux初识</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Linux入门基础
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Data/">
+                        <span class="chip bg-color">Data</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <a href="/about" target="_blank">youzg</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/youzg" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:youzg123@foxmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
